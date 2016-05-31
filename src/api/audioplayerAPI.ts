@@ -1,9 +1,9 @@
 import {Injectable, bind} from '@angular/core';
 import {Subject, BehaviorSubject, Observable} from 'rxjs';
-import {audioItem, IAudiodata} from "../app/reducers/audioReducer";
+import { AudioItem } from '../models';
 
 @Injectable()
-export class WebAudioPlayerAPI{
+export class AudioPlayerService{
 
     private audioContext: AudioContext;
     private audioNode:AudioBufferSourceNode;
@@ -21,7 +21,7 @@ export class WebAudioPlayerAPI{
 
     loadAudio(audioItem:any): Observable<any[]>  {
         var ref = this;
-        console.log("[WebAudioPlayerAPI] loadAudio  -----  =", audioItem.artistAudioBuffer.audioBuffer);
+        console.log("[AudioPlayerService] loadAudio  -----  =", audioItem.artistAudioBuffer.audioBuffer);
         if(this.audioBuffer) {
           if(this.audioNode ) {
             this.audioNode.stop(0);
@@ -63,7 +63,3 @@ export class WebAudioPlayerAPI{
     }
 
 }
-
-export var webAudioPlayerAPIInjectables: Array<any> = [
-    bind(WebAudioPlayerAPI).toClass(WebAudioPlayerAPI)
-];

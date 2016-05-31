@@ -1,14 +1,13 @@
 import {Injectable, provide} from "@angular/core";
 import {Http} from "@angular/http";
-import {Subject, BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import "rxjs/Rx";
 
-export default {
-    getTrack(URL:string): Observable<any[]> {
-       console.log('getTrack URL =' + URL)
+@Injectable()
+export class AudioDataLoadService {
+    loadAudioItemData(URL:string): Observable<any[]> {
         return Observable.create(observer=> {
             let req = new XMLHttpRequest();
-            console.log('AudioMachineRemote URL =' + URL)
             req.open('get', URL);
             req.responseType = "arraybuffer";
             req.onreadystatechange = function () {

@@ -1,19 +1,17 @@
-/**
- * Mocking client-server processing
- */
-import {jsonArtists} from './artistsJSON';
+import 'rxjs/add/operator/map';
+import { Injectable } from '@angular/core';
+import { jsonArtists } from './artistsJSON';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
-import 'rxjs/add/observable/timer';
+import { Artist } from '../models';
 
 
 const TIMEOUT = 1000;
 
-export default {
+@Injectable()
+export class ArtistService {
 
-    getArtists(timeout:number): Observable<any> {
-        console.log('artistAPI timeout ='+timeout);
+    requestArtist(): Observable<Artist[]> {
         return Observable.of(jsonArtists)
-            .delay(timeout || TIMEOUT);
+            .delay(TIMEOUT).map(res => res.json());
     }
 }

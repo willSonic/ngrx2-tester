@@ -1,10 +1,23 @@
+import { Injectable } from '@angular/core';
 import {Action} from "@ngrx/store";
-import { REQUEST_ARTISTS} from "../reducers/artistsReducer";
+import { Artist } from '../models';
 
-export const getArtists = () => {
-    return <Action>{ type: REQUEST_ARTISTS };
-}
 
-export const currentArtist = () => {
-    return <Action>{ type: REQUEST_ARTISTS };
+@Injectable()
+export class ArtistActions {
+
+     static REQUEST_ARTISTS = '[Artist] Request Artist';
+     requestArtist(query: string): Action {
+         return {
+              type:ArtistActions.REQUEST_ARTISTS,
+              payload:query
+         };
+     }
+      static ARTIST_REQUEST_COMPLETE = '[Artist] Artist Request Complete';
+      artistRequestComplete(results: Artist[]): Action {
+        return {
+          type: ArtistActions.ARTIST_REQUEST_COMPLETE,
+          payload: results
+        };
+      }
 }

@@ -2,7 +2,7 @@
 ehthumbs.db
 Icon?
 Thumbs.db
-
+.idea/
 # Node Files #
 /node_modules
 /bower_components
