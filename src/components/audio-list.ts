@@ -1,7 +1,6 @@
 import {Component, ChangeDetectionStrategy, SimpleChange,  OnChanges, Input, Output, EventEmitter} from "@angular/core";
 
-import {AudioItem} from "./audio-item";
-import {IAudiodata} from "../reducers/audioReducer";
+import { AudioItem } from "../models/audioitem";
 
 @Component({
     selector: 'audio-list',
@@ -20,8 +19,8 @@ import {IAudiodata} from "../reducers/audioReducer";
     directives: [AudioItem]
 })
 export class AudioList implements OnChanges  {
-    @Input() audioList: IAudiodata[];
-    @Output() playAudioItem = new EventEmitter<IAudiodata>();
+    @Input() audioList: AudioItem[];
+    @Output() playAudioItem = new EventEmitter<AudioItem>();
 
 
 

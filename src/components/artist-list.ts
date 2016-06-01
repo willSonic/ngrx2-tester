@@ -1,9 +1,8 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter} from "@angular/core";
 
 import {ArtistItem} from "./artist-item";
-import {IArtist} from "../reducers/artistsReducer";
-
-
+import {Artist} from "../models/artist";
+ 
 @Component({
     selector: 'artist-list',
     template: `
@@ -20,7 +19,8 @@ import {IArtist} from "../reducers/artistsReducer";
     changeDetection: ChangeDetectionStrategy.OnPush,
     directives: [ArtistItem]
 })
+
 export class ArtistList {
-    @Input() artistList: IArtist[];
-    @Output() createPlaylistItem = new EventEmitter<IArtist>();
+    @Input() artistList: Artist[];
+    @Output() createPlaylistItem = new EventEmitter<Artist>();
 }

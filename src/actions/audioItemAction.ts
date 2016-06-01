@@ -9,7 +9,7 @@ import { AudioItem } from '../models';
 
 
 @Injectable()
-export class AudioItemAction {
+export class AudioItemActions {
     static CREATE_AUDIOITEM = '[AudioItem] Search Complete';
 
     private actions$: Subject<Action> = new Subject<Action>();
@@ -21,7 +21,7 @@ export class AudioItemAction {
                                             .subscribe( (playlist) =>  { this.playlist = playlist });
 
             const createPlaylistItem =  this.actions$
-                                            .filter((action : Action) => action.type === AudioItemAction.CREATE_AUDIOITEM);
+                                            .filter((action : Action) => action.type === AudioItemActions.CREATE_AUDIOITEM);
 
             Observable.from(createPlaylistItem).subscribe(_store);
     }
@@ -30,7 +30,7 @@ export class AudioItemAction {
         //console.log('[AudioServiceAction] ----   createPlaylistItem   artist = ', artist);
        //console.log('[AudioServiceAction] ----   createPlaylistItem   this.playlist.audioList = ', this.playlist.audioList);
         if(this.shouldAddToPlaylist(artist)){
-            this.actions$.next({type: AudioItemAction.CREATE_AUDIOITEM, payload: artist });
+            this.actions$.next({type: AudioItemActions.CREATE_AUDIOITEM, payload: artist });
         }else{
             this.actions$.next({type: '', payload: {} });
         }

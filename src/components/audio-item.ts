@@ -1,6 +1,6 @@
 import {Component, ChangeDetectionStrategy, Output, Input, EventEmitter} from "@angular/core";
 import{ NgClass} from "@angular/common";
-import {IAudiodata} from "../reducers/audioReducer";
+import {AudioItem} from "../models/audioitem";
 
 @Component({
     selector: 'audio-item',
@@ -22,5 +22,5 @@ import {IAudiodata} from "../reducers/audioReducer";
 })
 export class AudioItem {
     @Input()  audioItem: any;
-    @Output() playAudioItem: EventEmitter<IAudiodata> = new EventEmitter<IAudiodata>();
+    @Output() playAudioItem: EventEmitter<AudioItem> = new EventEmitter<AudioItem>();
 }

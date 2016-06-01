@@ -1,6 +1,6 @@
-import {Injectable, bind} from '@angular/core';
-import {Subject, BehaviorSubject, Observable} from 'rxjs';
-import { AudioItem } from '../models';
+import { Injectable, bind} from '@angular/core';
+import { Subject, BehaviorSubject, Observable} from 'rxjs';
+import { AudioItem } from '../models/audioitem';
 
 @Injectable()
 export class AudioPlayerService{
