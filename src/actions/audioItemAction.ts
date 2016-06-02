@@ -10,7 +10,9 @@ import { AudioItem } from '../models';
 
 @Injectable()
 export class AudioItemActions {
-    static CREATE_AUDIOITEM = '[AudioItem] Search Complete';
+    static INITIALIZE_AUDIOITEM      = '[AudioItem]  initialize an audioItem';
+    static LOAD_AUDIOBUFFER_START    = '[AudioItem]  start loading audiobuffer data';
+    static LOAD_AUDIOBUFFER_COMPLETE = '[AudioItem]  complete loading audiobuffer data';
 
     private actions$: Subject<Action> = new Subject<Action>();
     private playlist:any;

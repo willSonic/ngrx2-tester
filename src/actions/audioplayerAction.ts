@@ -13,33 +13,44 @@ export class AudioPlayerActions {
               payload:audioItem
          };
      }
+     
+     static LOAD_PLAYER_COMPLETE = '[AudioPlayer] Load Player Complete';
+      loadPlayer(audioItem: AudioItem): Action {
+         return {
+              type:AudioPlayerActions.LOAD_PLAYER_COMPLETE,
+              payload:audioItem
+         };
+     }
 
      static PLAYER_START = '[AudioPlayer] Player Start';
-     playerStart(): Action {
+     playerStart(audioItem: AudioItem): Action {
          return {
               type:AudioPlayerActions.PLAYER_START,
+              payload:audioItem
          };
      }
 
      static PLAYER_STOP = '[AudioPlayer] Player stop';
-     playerStop(): Action {
+     playerStop(audioItem: AudioItem): Action {
          return {
               type:AudioPlayerActions.PLAYER_STOP,
+              payload:audioItem
          };
      }
 
      static UPDATE_TIME = '[AudioPlayer] Update Time';
-     updateTime(): Action {
+     updateTime(audioItem: AudioItem): Action {
          return {
-              type:AudioPlayerActions.UPDATE_TIME
+              type:AudioPlayerActions.UPDATE_TIME,
+              payload:audioItem
          };
      }
 
      static UPDATE_VOLUME = '[AudioPlayer] Update Volume';
-     requestArtist(gainVal: number): Action {
+     updateValue(audioItem: AudioItem): Action {
          return {
               type:AudioPlayerActions.UPDATE_VOLUME,
-              payload:gainVal
+              payload:audioItem
          };
      }
 }

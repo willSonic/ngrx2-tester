@@ -4,41 +4,54 @@ import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 
 import { AudioItem } from '../models';
-import { AudioPlayer } from '../actions';
+import { AudioPlayerActions } from '../actions';
 
 
-export interface ArtistState {
-    ids: string[];
-    entities: { [id: number]: Artist };
+
+export interface AudioPlayerState {
+    id: string;
+    loading:boolean
 };
 
-const initialState: ArtistState = {
-    ids: [],
-    entities: {}
+const initialState: AudioPlayerState = {
+     id: undefined,
+     loading:false
 };
 
 
-export default function(state = initialState, action: Action): ArtistState {
+export default function(state = initialState, action: Action): AudioPlayerState {
     switch (action.type) {
-        case ArtistActions.REQUEST_ARTISTS: {
+
+        case AudioPlayerActions.LOAD_PLAYER: {
+              const audioItem = action.payload;
+              return   Object.assign(state,{
+                                            id:audioItem.id,
+                                            loading: true
+                                           });
+        }
+
+        case AudioPlayerActions.LOAD_PLAYER_COMPLETE: {
+              const audioItem:AudioItem = action.payload;
+              return   Object.assign(state,{
+                                            id:audioItem.id,
+                                            loading: true
+                                           });
+        }
+
+        case AudioPlayerActions.PLAYER_START: {
             return state;
         }
 
-        case ArtistActions.ARTIST_REQUEST_COMPLETE: {
-            const artists: Artist[] = action.payload;
-            const newArtists = artists.filter(artist => !state.entities[artist.id]);
+        case AudioPlayerActions.PLAYER_STOP: {
+            return state;
+        }
 
-            const newArtistsIds = newArtists.map(book => book.id);
-            const newArtistsEntities = newArtists.reduce((entities: { [id: string]: Artist }, artist: Artist) => {
-                return Object.assign(entities, {
-                    [artist.id]: artist
-                });
-            }, {});
+        case AudioPlayerActions.UPDATE_TIME: {
+            return state;
+        }
 
-            return {
-                ids: [ ...state.ids, ...newArtistsIds ],
-                entities: Object.assign({}, state.entities, newArtistsEntities)
-            };
+        case AudioPlayerActions.UPDATE_VOLUME: {
+            return state;
         }
 
         default: {
@@ -48,17 +61,15 @@ export default function(state = initialState, action: Action): ArtistState {
 }
 
 
-export function getArtistEntities() {
-    return (state$: Observable<ArtistState>) => state$
-        .select(s => s.entities);
-};
 
-
-export function getArtists(artistIds: string[]) {
-    return (state$: Observable<ArtistState>) => state$
-        .let(getArtistEntities())
-        .map(entities => artistIds.map(id => entities[id]));
+export function getStatus() {
+  return (state$: Observable<AudioPlayerState>) => state$;
 }
+
+export function getAudioItemId() {
+  return (state$: Observable<AudioPlayerState>) => state$;
+}
+
 
 
 /*import {Reducer, Action} from "@ngrx/store";

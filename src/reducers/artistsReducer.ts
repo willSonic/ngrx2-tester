@@ -8,7 +8,7 @@ import { ArtistActions } from '../actions';
 
 
 export interface ArtistState {
-    ids: string[];
+    ids: number[];
     entities: { [id: number]: Artist };
 };
 
@@ -28,7 +28,7 @@ export default function(state = initialState, action: Action): ArtistState {
             const artists: Artist[] = action.payload;
             const newArtists = artists.filter(artist => !state.entities[artist.id]);
 
-            const newArtistsIds = newArtists.map(book => book.id);
+            const newArtistsIds = newArtists.map(artist => artist.id);
             const newArtistsEntities = newArtists.reduce((entities: { [id: string]: Artist }, artist: Artist) => {
                 return Object.assign(entities, {
                     [artist.id]: artist
