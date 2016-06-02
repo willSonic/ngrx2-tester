@@ -1,23 +1,25 @@
-<!DOCTYPE html>
-<html lang="">
+<!doctype html>
+<html>
 <head>
-
-  <title>@ngrx/books-demo</title>
-
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Angular2-Webpack-Lite Boilerplate">
-
+  <title>@ngrx/books-demo</title>
   <base href="/">
+  {{content-for 'head'}}
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="main.css" rel="stylesheet">
 
-
+  <!-- FontAwesome for md-icon demo. -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 
 <body>
-  <app>
+   <app>
     Loading...
   </app>
 
+  <!-- HammerJS for gestures -->
+  <script src="https://ajax.googleapis.com/ajax/libs/hammerjs/2.0.8/hammer.min.js"></script>
 </body>
 </html>

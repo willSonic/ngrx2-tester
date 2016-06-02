@@ -1,5 +1,7 @@
 var path = require('path');
 var _root = path.resolve(__dirname, '..');
+var npmRoot = __dirname + "/node_modules";
+var appDir = __dirname + "/app";
 
 function root(args) {
   args = Array.prototype.slice.call(arguments, 0);
@@ -8,6 +10,7 @@ function root(args) {
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin   = require("extract-text-webpack-plugin");
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 module.exports = {
@@ -22,7 +25,8 @@ module.exports = {
   	chunkFilename: '[id].chunk.js'
   },
   resolve: {
-    extensions: ['', '.ts', '.js'],
+    extensions: ['', '.ts', '.js', '.scss', '.html',
+      '.component.ts',  '.component.scss', '.component.html'],
     root: root('src'),
     modulesDirectories: ['node_modules']
   },
@@ -38,17 +42,23 @@ module.exports = {
         loader: 'json-loader'
       },
       {
-        test: /\.css$/,
-        loader: 'raw-loader'
-      },
-      {
         test: /\.html$/,
         loader: 'raw-loader',
         exclude: [root('src/index.html')]
+      },
+      {
+        test : /\.css$/,
+        loader:   ExtractTextPlugin.extract('style-loader', 'css-loader')
+      },
+      {
+        test : /\.scss$/,
+        loaders: ['raw-loader','sass-loader']
+
       }
     ]
   },
   plugins: [
+    new ExtractTextPlugin("styles.css"),
     new ForkCheckerPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.CommonsChunkPlugin({

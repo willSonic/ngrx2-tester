@@ -1,13 +1,13 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { provideStore } from '@ngrx/store';
-import {provideStore, usePreMiddleware, usePostMiddleware, Middleware} from "@ngrx/store";
+import {provideStore} from "@ngrx/store";
 import {APP_REDUCERS} from "./reducers/reducers";
 import { runEffects } from '@ngrx/effects';
 
 import App from './app'
 import reducer from './reducers';
 import effects from './effects';
-import services from './services';
+//import services from './services';
 import actions from './actions';
 /*import {bootstrap} from '@angular/platform-browser-dynamic';
 import {provide} from '@angular/core';
@@ -78,7 +78,7 @@ bootstrap(App, [
    *
    * Source: https://github.com/ngrx/effects/blob/master/lib/run-effects.ts#L8-L20
    */
-  runEffects(effects),
+  //runEffects(effects),
 
 
   /**
@@ -86,13 +86,13 @@ bootstrap(App, [
    * router state with @ngrx/store. This lets you debug router state using
    * ngrx/store and to change the location by dispatching actions.
    */
-  connectRouterToStore(),
+  //connectRouterToStore(),
 
 
   /**
    * Finall we provide additional services and action creators so they can
    * be used by all of our components, effects, and guards.
    */
-  services,
+  //services,
   actions
 ]);
