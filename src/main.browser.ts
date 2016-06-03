@@ -1,6 +1,6 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { provideStore } from '@ngrx/store';
-import {provideStore, usePreMiddleware, usePostMiddleware, Middleware} from "@ngrx/store";
+import {provideStore} from "@ngrx/store";
 import {APP_REDUCERS} from "./reducers/reducers";
 import { runEffects } from '@ngrx/effects';
 
@@ -22,7 +22,7 @@ import audiomachineSagas from "./sagas/audiomachine";
 import {installSagaMiddleware} from 'store-saga';
 
 
-import { apiInjectables } from '../api/api.injectable.ts';
+import { apiInjectables } from '../services';
 
 
 import {CustomBrowserXhr} from '../util/custom.xhr';
@@ -86,7 +86,7 @@ bootstrap(App, [
    * router state with @ngrx/store. This lets you debug router state using
    * ngrx/store and to change the location by dispatching actions.
    */
-  connectRouterToStore(),
+  //connectRouterToStore(),
 
 
   /**

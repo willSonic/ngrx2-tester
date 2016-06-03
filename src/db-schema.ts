@@ -6,9 +6,9 @@ import { DBSchema } from '@ngrx/db';
  */
 const schema: DBSchema = {
   version: 1,
-  name: 'books_app',
+  name: 'webaudio_app',
   stores: {
-    books: {
+    artists: {
       autoIncrement: true,
       primaryKey: 'id'
     }

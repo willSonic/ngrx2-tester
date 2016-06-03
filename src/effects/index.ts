@@ -2,7 +2,7 @@ import '@ngrx/core/add/operator/select';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/let';
 import { Observable } from 'rxjs/Observable';
-import { AudioPlayerEffects } from './audioplayerEffects';
+import { MyWebAppEffects } from './mywebappEffects';
 
 
 import { compose } from '@ngrx/core/compose';
@@ -17,5 +17,5 @@ import { combineReducers } from '@ngrx/store';
 
 
 export default [
-  AudioPlayerEffects
+  MyWebAppEffects
 ];

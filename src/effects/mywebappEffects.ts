@@ -14,6 +14,6 @@ import { Observable } from 'rxjs/Observable';
 
 
 import { AppState } from '../reducers';
-import { GoogleBooksService } from '../services/google-books';
-import { BookActions } from '../actions/book';
-import { Book } from '../models';
+import { ArtistService } from '../services/artistService';
+import { ArtistActions } from '../actions/artistsAction';
+import { Artist } from '../models';
