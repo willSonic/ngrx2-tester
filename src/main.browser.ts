@@ -7,7 +7,7 @@ import { runEffects } from '@ngrx/effects';
 import App from './app'
 import reducer from './reducers';
 import effects from './effects';
-import services from './services';
+//import services from './services';
 import actions from './actions';
 /*import {bootstrap} from '@angular/platform-browser-dynamic';
 import {provide} from '@angular/core';
@@ -78,7 +78,7 @@ bootstrap(App, [
    *
    * Source: https://github.com/ngrx/effects/blob/master/lib/run-effects.ts#L8-L20
    */
-  runEffects(effects),
+  //runEffects(effects),
 
 
   /**
@@ -93,6 +93,6 @@ bootstrap(App, [
    * Finall we provide additional services and action creators so they can
    * be used by all of our components, effects, and guards.
    */
-  services,
+  //services,
   actions
 ]);
