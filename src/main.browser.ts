@@ -1,14 +1,15 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
-import { provideStore } from '@ngrx/store';
-import {provideStore} from "@ngrx/store";
-import {APP_REDUCERS} from "./reducers/reducers";
-import { runEffects } from '@ngrx/effects';
+import {HTTP_PROVIDERS, BrowserXhr} from '@angular/http';
+//import { provideStore } from '@ngrx/store';
+//import {provideStore} from "@ngrx/store";
+//import {APP_REDUCERS} from "./reducers/reducers";
+//import { runEffects } from '@ngrx/effects';
 
 import App from './app'
-import reducer from './reducers';
-import effects from './effects';
+//import reducer from './reducers';
+//import effects from './effects';
 //import services from './services';
-import actions from './actions';
+//import actions from './actions';
 /*import {bootstrap} from '@angular/platform-browser-dynamic';
 import {provide} from '@angular/core';
 import {HTTP_PROVIDERS, BrowserXhr} from '@angular/http';
@@ -67,7 +68,7 @@ bootstrap(App, [
    *
    * Source: https://github.com/ngrx/store/blob/master/src/ng2.ts#L43-L69
    */
-  provideStore(reducer),
+  //provideStore(reducer),
 
   /**
    * runEffects configures all providers for @ngrx/effects. Observables decorated
@@ -94,5 +95,5 @@ bootstrap(App, [
    * be used by all of our components, effects, and guards.
    */
   //services,
-  actions
+  //actions
 ]);

@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
+import {MdToolbar} from '@angular2-material/toolbar';
+import {MdButton} from '@angular2-material/button';
 
 @Component({
   selector: 'app',
-  template: `
-    <navigator>
-      <a linkTo="/">Collection</a>
-      <a linkTo="/book/find">Find Book</a>
-   </navigator>
-   <!-- <route-view></route-view> -->
-  `
+	directives: [
+		MdToolbar,
+		MdButton
+	],
+	templateUrl  : 'main.app.html',
 })
 export default class App { }
 
@@ -61,8 +61,8 @@ import {Store, Action} from "@ngrx/store";
     directives: [ArtistList, AudioList],
     pipes: [AsyncPipe],
     changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class ArtistPlaylistApp{
+})*/
+/*export class ArtistPlaylistApp{
 
     artistList: any;
     audioList: any;
@@ -75,13 +75,13 @@ export class ArtistPlaylistApp{
 
     constructor(public store: Store<any>,  private audioServiceActions:AudioServiceAction) {
         this.artistList   = store.let(artistAsArraySelector);
-        /*this.playlist     = store.let(playlistArraySelector).subscribe((val) =>{
+        this.playlist     = store.let(playlistArraySelector).subscribe((val) =>{
                                                                      console.log('[ArtistPlaylistApp] playlist  change',val)
-                                                                   });*/
+                                                                   });
         this.audioList    = store.let(constructedPlaylistItem);
-        /*this.subscription  = store.select('playlist').subscribe((val) =>{
+        this.subscription  = store.select('playlist').subscribe((val) =>{
                                                                      console.log('[ArtistPlaylistApp] subscription  change',val)
-                                                                   });*/
+                                                                   });
 
         this.actions$.subscribe(store);
         this.actions$.next(getArtists());
