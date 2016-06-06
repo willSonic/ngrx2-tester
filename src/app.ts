@@ -1,126 +1,26 @@
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/distinctUntilChanged';
 import { Component, Output, Input } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { ArtistSearch } from './components/search/artist-search'
+import { MdToolbar } from '@angular2-material/toolbar';
+import {MATERIAL_DIRECTIVES } from 'ng2-material';
 
-import {MdToolbar} from '@angular2-material/toolbar';
-import {MdButton} from 'ng2-material';
-import {MdInput} from '@angular2-material/input';
-import {MdIcon} from 'ng2-material';
-import {MATERIAL_DIRECTIVES} from 'ng2-material';
-
-
-
-
-export type QueryInput = string;
-export type SearchOutput = string;
 
 @Component({
   selector: 'app',
 	directives: [
 	    MATERIAL_DIRECTIVES,
 	    MdToolbar,
-	    MdButton,
-	    MdInput,
-	    MdIcon
+	    ArtistSearch
 	],
-	templateUrl  : 'main.app.html',
+	template:`
+				<md-toolbar>
+					Wilsonic NRGX2 Test Harness
+					<span class="app-toolbar-filler"></span>
+				</md-toolbar>
+				
+				<div class="app-content" layout="row" flex="100">
+                       <route-view></route-view>      
+                </div>
+             `
 })
+export default class App {}
 
-export default class App {
-
-
-    keyup$ = new Subject<KeyboardEvent>();
-
-	@Input() query: QueryInput = '';
-	  @Output() search: Observable<SearchOutput> = this.keyup$
-		.debounceTime(300)
-		.map(event => (event.target as HTMLInputElement).value)
-		.distinctUntilChanged();
-
-
-}
-
-
-/*
-
-import { Component, ChangeDetectionStrategy} from '@angular/core';
-import { ArtistList} from "./components/artist-list";
-import { AudioList} from "./components/audio-list";
-import { getArtists } from "./actions/artistsAction";
-import { playAudioItem } from "./actions/audioplayerAction";
-import { AudioServiceAction } from "./actions/audioServiceAction";
-import { artistAsArraySelector } from "./selectors/artist.selector";
-import { constructedPlaylistItem, playlistArraySelector } from "./selectors/playlist.selector";
-import {AsyncPipe } from "@angular/common";
-import { Subject } from 'rxjs';
-import {Store, Action} from "@ngrx/store";
-
-@Component({
-    selector: `artist-playlist-app`,
-    template: `
-	<div id="layout" class="pure-g">
-		<div class="sidebar pure-u-1 pure-u-md-1-4">
-			<div class="header">
-				<h1 class="brand-title">Audio Artist NGRX Store</h1>
-				<h2 class="brand-tagline">Wiki Audio</h2>
-			</div>
-		</div>
-		<div class="content pure-u-1">
-		   <div class="pure-g">
-		      <div class="pure-u-1-3">
-                    <artist-list
-                        [artistList]="(artistList | async)"
-                        (createPlaylistItem)="audioServiceActions.createPlaylistItem($event)" 
-                        >
-                    </artist-list>
-              </div>
-		      <div class=" pure-u-1-3 custom-restricted-width">
-                    <audio-list
-                        [audioList]="(audioList | async)"
-                        (playAudioItem)="actions$.next(playArtistAction($event))"
-                        >
-                    </audio-list>
-              </div>
-		    </div>
-		</div>
-	</div>
-	`,
-    directives: [ArtistList, AudioList],
-    pipes: [AsyncPipe],
-    changeDetection: ChangeDetectionStrategy.OnPush
-})*/
-/*export class ArtistPlaylistApp{
-
-    artistList: any;
-    audioList: any;
-    playlist:any;
-    actions$ = new Subject<Action>();
-    playArtistAction = playAudioItem;
-
-    private subscription;
-
-
-    constructor(public store: Store<any>,  private audioServiceActions:AudioServiceAction) {
-        this.artistList   = store.let(artistAsArraySelector);
-        this.playlist     = store.let(playlistArraySelector).subscribe((val) =>{
-                                                                     console.log('[ArtistPlaylistApp] playlist  change',val)
-                                                                   });
-        this.audioList    = store.let(constructedPlaylistItem);
-        this.subscription  = store.select('playlist').subscribe((val) =>{
-                                                                     console.log('[ArtistPlaylistApp] subscription  change',val)
-                                                                   });
-
-        this.actions$.subscribe(store);
-        this.actions$.next(getArtists());
-
-    }
-
-    ngOnDestroy() {
-        this.store.unsubscribe();
-    }
-
-}
- */

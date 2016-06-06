@@ -2,7 +2,7 @@ import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { AudioTrack } from '../models';
+//import { AudioTrack } from '../models';
 import { AudioArtist } from '../models';
 
 @Injectable()
@@ -25,19 +25,24 @@ export class SpotifyService {
   search(query: string, type: string): Observable<any[]> {
         return this.query(`/search`, [ `q=${query}`, `type=${type}` ]);
    }
-
+   
    searchAudioArtist(query: string): Observable<AudioArtist[]> {
     return this.search(query, 'aritst');
-  }
+   }
 
+   retrieveAudioArtist(id: string): Observable<AudioArtist> {
 
-  searchAudioTrack(query: string): Observable<AudioTrack[]> {
-    return this.search(query, 'track');
-  }
+     let queryURL: string =  `${SpotifyService.BASE_URL}${URL}`;
+     return this.http.request(queryURL).map((res: any) => res.json());
+   }
+   /*
+   searchAudioTrack(query: string): Observable<AudioTrack[]> {
+     return this.search(query, 'track');
+   } 
 
   retrieveAudioTrack(id: string): Observable<AudioTrack[]> {
     return this.query(`/tracks/${id}`);
-  }
+  }*/
 
 
 }

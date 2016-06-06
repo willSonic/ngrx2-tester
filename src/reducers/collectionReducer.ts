@@ -39,23 +39,23 @@ export default function(state = initialState, action: Action): CollectionState {
 
     case AudioArtistActions.ADD_TO_COLLECTION_SUCCESS:
     case AudioArtistActions.REMOVE_FROM_COLLECTION_FAIL: {
-      const book: AudioArtist = action.payload;
+      const audioArtist: AudioArtist = action.payload;
 
-      if (state.ids.includes(book.id)) {
+      if (state.ids.includes(audioArtist.id)) {
         return state;
       }
 
       return Object.assign({}, state, {
-        ids: [ ...state.ids, book.id ]
+        ids: [ ...state.ids, audioArtist.id ]
       });
     }
 
     case AudioArtistActions.REMOVE_FROM_COLLECTION_SUCCESS:
     case AudioArtistActions.ADD_TO_COLLECTION_FAIL: {
-      const book: AudioArtist = action.payload;
+      const audioArtist: AudioArtist = action.payload;
 
       return Object.assign({}, state, {
-        ids: state.ids.filter(id => id !== book.id)
+        ids: state.ids.filter(id => id !== audioArtist.id)
       });
     }
 

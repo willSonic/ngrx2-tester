@@ -47,7 +47,7 @@ import { routerReducer, RouterState } from '@ngrx/router-store';
  * notation packages up all of the exports into a single object.
  */
 import searchReducer, * as fromSearch from './searchReducer';
-import audioArtistReducer, * as fromAudioArtist from './audioArtistsReducer';
+import audioArtistsReducer, * as fromAudioArtists from './audioArtistsReducer';
 import collectionReducer, * as fromCollection from './collectionReducer';
 
 
@@ -58,7 +58,7 @@ import collectionReducer, * as fromCollection from './collectionReducer';
 export interface AppState {
   router: RouterState;
   search: fromSearch.SearchState;
-  audioArtists: fromAudioArtist.AudioArtistState;
+  audioartists: fromAudioArtists.AudioArtistState;
   collection: fromCollection.CollectionState;
 }
 
@@ -73,7 +73,7 @@ export interface AppState {
 export default compose(storeLogger(), combineReducers)({
   router: routerReducer,
   search: searchReducer,
-  audioArtists: audioArtistReducer,
+  audioartists: audioArtistsReducer,
   collection: collectionReducer
 });
 
@@ -96,7 +96,7 @@ export default compose(storeLogger(), combineReducers)({
  */
  export function getAudioArtistsState() {
   return (state$: Observable<AppState>) => state$
-    .select(s => s.audioArtists);
+    .select(s => s.audioartists);
 }
 
 /**
@@ -110,19 +110,19 @@ export default compose(storeLogger(), combineReducers)({
  * of search results.
  */
  export function getAudioArtistEntities() {
-   return compose(fromAudioArtist.getAudioArtistEntities(), getAudioArtistsState());
+   return compose(fromAudioArtists.getAudioArtistEntities(), getAudioArtistsState());
  }
 
  export function getAudioArtist(id: string) {
-   return compose(fromAudioArtist.getAudioArtist(id), getAudioArtistsState());
+   return compose(fromAudioArtists.getAudioArtist(id), getAudioArtistsState());
  }
 
  export function hasAudioArtist(id: string) {
-   return compose(fromAudioArtist.hasAudioArtist(id), getAudioArtistsState());
+   return compose(fromAudioArtists.hasAudioArtist(id), getAudioArtistsState());
  }
 
- export function getBooks(bookIds: string[]) {
-   return compose(fromAudioArtist.getAudioArtists(bookIds), getAudioArtistsState());
+ export function getAudioArtists(audioArtistIds: string[]) {
+   return compose(fromAudioArtists.getAudioArtists(audioArtistIds), getAudioArtistsState());
  }
 
 
@@ -135,8 +135,8 @@ export function getSearchState() {
    .select(s => s.search);
 }
 
-export function getSearchBookIds() {
-  return compose(fromSearch.getBookIds(), getSearchState());
+export function getSearchAudioArtistIds() {
+  return compose(fromSearch.getAudioArtistIds(), getSearchState());
 }
 
 export function getSearchStatus() {
@@ -153,8 +153,8 @@ export function getSearchQuery() {
  */
 export function getSearchResults() {
   return (state$: Observable<AppState>) => state$
-    .let(getSearchBookIds())
-    .switchMap(bookIds => state$.let(getBooks(bookIds)));
+    .let(getSearchAudioArtistIds())
+    .switchMap(audioArtistIds => state$.let(getAudioArtists(audioArtistIds)));
 }
 
 
@@ -183,5 +183,5 @@ export function isAudioArtistInCollection(id: string) {
 export function getAudioArtistCollection() {
   return (state$: Observable<AppState>) => state$
     .let(getCollectionAudioArtistIds())
-    .switchMap(bookIds => state$.let(getBooks(bookIds)));
+    .switchMap(audioArtistIds => state$.let(getAudioArtists(audioArtistIds)));
 }

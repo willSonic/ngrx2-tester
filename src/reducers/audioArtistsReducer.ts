@@ -8,8 +8,8 @@ import { AudioArtistActions } from '../actions';
 
 
 export interface AudioArtistState {
-    ids: number[];
-    entities: { [id: number]: AudioArtist };
+    ids: string[];
+    entities: { [id: string]: AudioArtist };
 };
 
 const initialState: AudioArtistState = {
@@ -20,27 +20,42 @@ const initialState: AudioArtistState = {
 
 export default function(state = initialState, action: Action): AudioArtistState {
     switch (action.type) {
+
+        case AudioArtistActions.SEARCH_COMPLETE:
+        case AudioArtistActions.ARTIST_REQUEST_COMPLETE:
+        case AudioArtistActions.LOAD_COLLECTION_SUCCESS: {
+                const audioArtists: AudioArtist[] = action.payload;
+                const newArtists = audioArtists.filter(audioArtist => !state.entities[audioArtist.id]);
+
+                const newArtistsIds = newArtists.map(audioArtist => audioArtist.id);
+                const newArtistsEntities = newArtists.reduce((entities: { [id: string]: AudioArtist }, audioArtist: AudioArtist) => {
+                    return Object.assign(entities, {
+                        [audioArtist.id]: audioArtist
+                    });
+                }, {});
+
+                return {
+                    ids: [ ...state.ids, ...newArtistsIds ],
+                    entities: Object.assign({}, state.entities, newArtistsEntities)
+                };
+            }
         case AudioArtistActions.REQUEST_ARTISTS: {
             return state;
         }
+        case AudioArtistActions.LOAD_AUDIOARTIST: {
+          const audioArtist: AudioArtist = action.payload;
 
-        case AudioArtistActions.ARTIST_REQUEST_COMPLETE: {
-            const audioArtists: AudioArtist[] = action.payload;
-            const newArtists = audioArtists.filter(audioArtist => !state.entities[audioArtist.id]);
+          if (state.ids.includes(audioArtist.id)) {
+            return state;
+          }
 
-            const newArtistsIds = newArtists.map(audioArtist => audioArtist.id);
-            const newArtistsEntities = newArtists.reduce((entities: { [id: string]: AudioArtist }, audioArtist: AudioArtist) => {
-                return Object.assign(entities, {
-                    [audioArtist.id]: audioArtist
-                });
-            }, {});
-
-            return {
-                ids: [ ...state.ids, ...newArtistsIds ],
-                entities: Object.assign({}, state.entities, newArtistsEntities)
-            };
+          return {
+            ids: [ ...state.ids, audioArtist.id ],
+            entities: Object.assign({}, state.entities, {
+              [audioArtist.id]: audioArtist
+            })
+          };
         }
-
         default: {
             return state;
         }

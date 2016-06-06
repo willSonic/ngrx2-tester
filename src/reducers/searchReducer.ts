@@ -50,7 +50,7 @@ export function getStatus() {
     .select(s => s.loading);
 }
 
-export function getBookIds() {
+export function getAudioArtistIds() {
   return (state$: Observable<SearchState>) => state$
     .select(s => s.ids);
 }

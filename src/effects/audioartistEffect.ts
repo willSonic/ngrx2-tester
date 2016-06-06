@@ -40,7 +40,7 @@ export class AudioArtistEffects {
  * Official Docs: http://reactivex.io/rxjs/manual/overview.html#categories-of-operators
  * RxJS 5 Operators By Example: https://gist.github.com/btroncone/d6cf141d6f2c00dc6b35
  */
-  @Effect() openDB$ = this.db.open('spotify_artist_app').filter(() => false);
+  @Effect() openDB$ = this.db.open('audioartists_app').filter(() => false);
 
 
   @Effect() loadCollectionOnInit$ = Observable.of(this.audioArtistActions.loadCollection());
@@ -48,8 +48,8 @@ export class AudioArtistEffects {
 
   @Effect() loadCollection$ = this.updates$
     .whenAction(AudioArtistActions.LOAD_COLLECTION)
-    .switchMapTo(this.db.query('audioArtists').toArray())
-    .map((books: AudioArtist[]) => this.audioArtistActions.loadCollectionSuccess(books));
+    .switchMapTo(this.db.query('audioartists').toArray())
+    .map((audioArtists: AudioArtist[]) => this.audioArtistActions.loadCollectionSuccess(audioArtists));
 
 
   @Effect() search$ = this.updates$
@@ -72,7 +72,7 @@ export class AudioArtistEffects {
   @Effect() addAudioArtistToCollection$ = this.updates$
     .whenAction(AudioArtistActions.ADD_TO_COLLECTION)
     .map<AudioArtist>(toPayload)
-    .mergeMap(audioArtist => this.db.insert('audioArtists', [ audioArtist ])
+    .mergeMap(audioArtist => this.db.insert('audioartists', [ audioArtist ])
       .mapTo(this.audioArtistActions.addToCollectionSuccess(audioArtist))
       .catch(() => Observable.of(
         this.audioArtistActions.removeFromCollectionFail(audioArtist)
@@ -83,7 +83,7 @@ export class AudioArtistEffects {
   @Effect() removeAudioArtistFromCollection$ = this.updates$
     .whenAction(AudioArtistActions.REMOVE_FROM_COLLECTION)
     .map<AudioArtist>(toPayload)
-    .mergeMap(audioArtist => this.db.executeWrite('audioArtists', 'delete', [ audioArtist.id ])
+    .mergeMap(audioArtist => this.db.executeWrite('audioartists', 'delete', [ audioArtist.id ])
       .mapTo(this.audioArtistActions.removeFromCollectionSuccess(audioArtist))
       .catch(() => Observable.of(
         this.audioArtistActions.removeFromCollectionFail(audioArtist)
