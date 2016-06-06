@@ -1,20 +1,16 @@
-import { ArtistActions } from './artistsAction';
-import { AudioItemActions } from './audioItemAction';
-import { AudioPlayerActions } from './audioplayerAction';
-import { ArtistActions } from './artistsAction';
+import { AudioArtistActions } from './audioArtistsAction';
+//import { AudioItemActions } from './audioItemAction';
+//import { AudioPlayerActions } from './audioplayerAction';
 
 
 export {
-    ArtistActions,
-    AudioItemActions,
-    AudioPlayerActions,
-    ArtistActions
+    AudioArtistActions
+  //  AudioItemActions,
+   // AudioPlayerActions,
+   // ArtistActions
 
 };
 
 export default [
-    ArtistActions,
-    AudioItemActions,
-    AudioPlayerActions,
-    ArtistActions
+    AudioArtistActions,
 ];

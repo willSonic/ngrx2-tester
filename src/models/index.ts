@@ -1,2 +1,2 @@
-export { Artist} from './artist';
-export { AudioItem } from  './audioitem';
+export { AudioArtist} from './audio-artist-model';
+export { AudioTrack } from  './audio-track-model';

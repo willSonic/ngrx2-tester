@@ -46,9 +46,9 @@ import { routerReducer, RouterState } from '@ngrx/router-store';
  * the state of the reducer plus any selector functions. The `* as`
  * notation packages up all of the exports into a single object.
  */
-import searchReducer, * as fromSearch from './search';
-import booksReducer, * as fromBooks from './books';
-import collectionReducer, * as fromCollection from './collection';
+import searchReducer, * as fromSearch from './searchReducer';
+import audioArtistReducer, * as fromAudioArtist from './audioArtistsReducer';
+import collectionReducer, * as fromCollection from './collectionReducer';
 
 
 /**
@@ -58,7 +58,7 @@ import collectionReducer, * as fromCollection from './collection';
 export interface AppState {
   router: RouterState;
   search: fromSearch.SearchState;
-  books: fromBooks.BooksState;
+  audioArtists: fromAudioArtist.AudioArtistState;
   collection: fromCollection.CollectionState;
 }
 
@@ -73,7 +73,7 @@ export interface AppState {
 export default compose(storeLogger(), combineReducers)({
   router: routerReducer,
   search: searchReducer,
-  books: booksReducer,
+  audioArtists: audioArtistReducer,
   collection: collectionReducer
 });
 
@@ -94,9 +94,9 @@ export default compose(storeLogger(), combineReducers)({
  * }
  * ```
  */
- export function getBooksState() {
+ export function getAudioArtistsState() {
   return (state$: Observable<AppState>) => state$
-    .select(s => s.books);
+    .select(s => s.audioArtists);
 }
 
 /**
@@ -109,20 +109,20 @@ export default compose(storeLogger(), combineReducers)({
  * reducer's getBooks selector, finally returning an observable
  * of search results.
  */
- export function getBookEntities() {
-   return compose(fromBooks.getBookEntities(), getBooksState());
+ export function getAudioArtistEntities() {
+   return compose(fromAudioArtist.getAudioArtistEntities(), getAudioArtistsState());
  }
 
- export function getBook(id: string) {
-   return compose(fromBooks.getBook(id), getBooksState());
+ export function getAudioArtist(id: string) {
+   return compose(fromAudioArtist.getAudioArtist(id), getAudioArtistsState());
  }
 
- export function hasBook(id: string) {
-   return compose(fromBooks.hasBook(id), getBooksState());
+ export function hasAudioArtist(id: string) {
+   return compose(fromAudioArtist.hasAudioArtist(id), getAudioArtistsState());
  }
 
  export function getBooks(bookIds: string[]) {
-   return compose(fromBooks.getBooks(bookIds), getBooksState());
+   return compose(fromAudioArtist.getAudioArtists(bookIds), getAudioArtistsState());
  }
 
 
@@ -172,16 +172,16 @@ export function getCollectionLoading() {
   return compose(fromCollection.getLoading(), getCollectionState());
 }
 
-export function getCollectionBookIds() {
-  return compose(fromCollection.getBookIds(), getCollectionState());
+export function getCollectionAudioArtistIds() {
+  return compose(fromCollection.getAudioArtistIds(), getCollectionState());
 }
 
-export function isBookInCollection(id: string) {
-  return compose(fromCollection.isBookInCollection(id), getCollectionState());
+export function isAudioArtistInCollection(id: string) {
+  return compose(fromCollection.isAudioArtistInCollection(id), getCollectionState());
 }
 
-export function getBookCollection() {
+export function getAudioArtistCollection() {
   return (state$: Observable<AppState>) => state$
-    .let(getCollectionBookIds())
+    .let(getCollectionAudioArtistIds())
     .switchMap(bookIds => state$.let(getBooks(bookIds)));
 }

@@ -1,4 +1,8 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
+import {PLATFORM_DIRECTIVES,provide,Input,Directive,HostBinding} from '@angular/core';
+import {FlexDirective, LayoutDirective} from './components/layout';
+import {MATERIAL_BROWSER_PROVIDERS} from 'ng2-material';
+
 import {HTTP_PROVIDERS, BrowserXhr} from '@angular/http';
 //import { provideStore } from '@ngrx/store';
 //import {provideStore} from "@ngrx/store";
@@ -59,6 +63,9 @@ export function main() {
 document.addEventListener('DOMContentLoaded', main);
 */
 bootstrap(App, [
+     MATERIAL_BROWSER_PROVIDERS,
+    provide(PLATFORM_DIRECTIVES, { useValue: FlexDirective, multi: true}),
+    provide(PLATFORM_DIRECTIVES, { useValue: LayoutDirective, multi: true})
   /**
    * provideStore is run once at application bootstrap, accepting a reducer
    * function or object map of reducer functions. If passed an object of

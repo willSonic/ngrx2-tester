@@ -1,0 +1,23 @@
+<md-toolbar>
+    Wilsonic NRGX2 Test Harness
+
+    <span class="app-toolbar-filler"></span>
+</md-toolbar>
+
+<div class="app-content" layout="row" flex="100">
+
+     <div layout="column" flex="100">
+          <h2 class="search-title"> Spotify Artist Search</h2>
+         <div class="md-inline-form search-box" layout="row" layout-align="center center" flex="100">
+              <form layout="column" layout-align="center center" flex="70">
+                     <md-input  class="full-width" placeholder="Artist Name..."
+                                 [value]="query" (keyup)="keyup$.next($event)">
+                    </md-input>
+              </form>
+                     <button md-button  type="submit" class="md-icon-button search-icon" aria-label="Search">
+                        <i md-icon>search</i>
+                     </button>
+         </div>
+     </div>
+    <!-- <route-view></route-view> -->
+</div>
