@@ -6,9 +6,7 @@ import { Store } from '@ngrx/store';
 import { Guard, TraversalCandidate, Router } from '@ngrx/router';
 import { Observable } from 'rxjs/Observable';
 
-import { SpotifyService } from '../services/SpotifyService';
-import { AppState, hasAudioArtist, getCollectionLoaded } from '../reducers';
-import { AudioArtistActions } from '../actions/audioArtistsAction';
+import { AppState, getAudioArtistCollection, getCollectionLoaded } from '../reducers';
 
 
 /**
@@ -20,11 +18,9 @@ import { AudioArtistActions } from '../actions/audioArtistsAction';
  * More on guards: https://github.com/ngrx/router/blob/master/docs/overview/guards.md
  */
 @Injectable()
-export class AudioArtistExistsGuard implements Guard {
+export class CollectionExistGuard implements Guard {
   constructor(
     private store: Store<AppState>,
-    private spotifyArtists: SpotifyService,
-    private audioArtistActions: AudioArtistActions,
     private _router: Router
   ) { }
 
@@ -39,41 +35,14 @@ export class AudioArtistExistsGuard implements Guard {
       .take(1);
   }
 
-  /**
-   * This method checks if a book with the given ID is already registered
-   * in the Store
-   */
-  hasAudioArtistInStore(id: string) {
-    return this.store.let(hasAudioArtist(id)).take(1);
-  }
 
-  /**
-   * This method loads a book with the given ID from the API and caches
-   * it in the store, returning `true` or `false` if it was found.
-   */
-  hasAudioArtistInApi(id: string) {
-    console.log('[AudioArtistExistsGuard] ----  hasAudioArtistInApi ===');
-    return this.spotifyArtists.retrieveAudioArtist(id)
-      .map(audioArtist => this.audioArtistActions.loadAudioArtist(audioArtist))
-      .do(action => this.store.dispatch(action))
-      .map(audioArtist => !!audioArtist)
-      .catch(() => Observable.of(false));
-  }
-
-  /**
-   * `hasBook` composes `hasBookInStore` and `hasBookInApi`. It first checks
-   * if the book is in store, and if not it then checks if it is in the
-   * API.
-   */
-  hasAudioArtist(id: string) {
-    return this.hasAudioArtistInStore(id)
+   checkForAudioArtistCollection(){
+    return this.store.let(getAudioArtistCollection())
       .switchMap(inStore => {
-        if (inStore) {
-          return Observable.of(inStore);
-        }
-        return this.hasAudioArtistInApi(id);
-      });
-  }
+              // console.log('[CollectionExistGuard] -checkForAudioArtistCollection= inStore',inStore.length);
+              return (inStore && inStore.length>0)? Observable.of(true): Observable.of(false)
+        });
+   }
 
   /**
    * This is the actual method the router will call when our guard is run.
@@ -90,10 +59,9 @@ export class AudioArtistExistsGuard implements Guard {
    */
   protectRoute({ routeParams: { id } }: TraversalCandidate) {
     return this.waitForCollectionToLoad()
-      .switchMapTo(this.hasAudioArtist(id))
+      .switchMapTo(this.checkForAudioArtistCollection())
           .map((audioArtistPresent) => {
                if(!audioArtistPresent){
-                  console.log('[AudioArtistExistsGuard] ----  protectRoute === REDIRECT');
                   this._router.go('/audioArtist/find')
                }
                return audioArtistPresent;

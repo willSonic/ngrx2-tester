@@ -1,14 +1,13 @@
 import { Routes } from '@ngrx/router';
 
-import { AudioArtistExistsGuard } from './guards';
+import { AudioArtistExistsGuard, CollectionExistGuard  } from './guards';
 
 
 const routes: Routes = [
   {
     path: '/',
-    guards: [ AudioArtistExistsGuard ],
+    guards: [ CollectionExistGuard ],
     loadComponent: () => new Promise(resolve => {
-      console.log('[AudioArtistExistGuard] --- loadComponent --- resolve', resolve);
       (require as any).ensure([], require => {
         resolve(require('./pages/collection').CollectionPage);
       });
