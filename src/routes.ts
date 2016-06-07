@@ -6,7 +6,9 @@ import { AudioArtistExistsGuard } from './guards';
 const routes: Routes = [
   {
     path: '/',
+    guards: [ AudioArtistExistsGuard ],
     loadComponent: () => new Promise(resolve => {
+      console.log('[AudioArtistExistGuard] --- loadComponent --- resolve', resolve);
       (require as any).ensure([], require => {
         resolve(require('./pages/collection').CollectionPage);
       });

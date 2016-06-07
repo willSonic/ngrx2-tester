@@ -17,7 +17,7 @@ export interface AudioArtist {
         total:number;
     }
     genres:string[];
-    images: string[];
+    images: Image[];
     name:string;
     popularity:string;
     type:string;

@@ -1,7 +1,7 @@
 import {Component, ChangeDetectionStrategy, Input, Output, EventEmitter} from "@angular/core";
 
 import {ArtistItem} from "./artist-item";
-import {Artist} from "../models/artist";
+import {AudioArtist} from "../models/audio-artist-model";
  
 @Component({
     selector: 'artist-list',
@@ -21,6 +21,6 @@ import {Artist} from "../models/artist";
 })
 
 export class ArtistList {
-    @Input() artistList: Artist[];
-    @Output() createPlaylistItem = new EventEmitter<Artist>();
+    @Input() artistList: AudioArtist[];
+    @Output() createPlaylistItem = new EventEmitter<AudioArtist>();
 }

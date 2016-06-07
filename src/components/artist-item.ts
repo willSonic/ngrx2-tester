@@ -1,5 +1,5 @@
 import {Component, ChangeDetectionStrategy, Output, Input, EventEmitter} from "@angular/core";
-import {Artist} from "../models/artist";
+import {AudioArtist} from "../models/audio-artist-model";
 
 
 //
@@ -27,6 +27,6 @@ import {Artist} from "../models/artist";
     `,
 })
 export class ArtistItem {
-    @Input()  artistItem: Artist;
-    @Output() createPlaylistItem: EventEmitter<Artist> = new EventEmitter<Artist>();
+    @Input()  artistItem: AudioArtist;
+    @Output() createPlaylistItem: EventEmitter<AudioArtist> = new EventEmitter<AudioArtist>();
 }
