@@ -74,7 +74,7 @@ export class AudioArtistPreviewComponent {
   }
 
   get name() {
-    return this.audioArtist.name;
+    return this.audioArtist.artist.name;
   }
 
 /*  get subtitle() {

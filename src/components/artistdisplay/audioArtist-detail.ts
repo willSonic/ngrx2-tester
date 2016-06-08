@@ -23,26 +23,22 @@ export type RemoveOutput = AudioArtist;
   template: `
     <md-card>
       <md-card-title-group>
-        <md-card-title>{{ title }}</md-card-title>
-        <md-card-subtitle *ngIf="subtitle">{{ subtitle }}</md-card-subtitle>
-        <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
+        <md-card-title>{{ artistName }}</md-card-title>
+       <!-- <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/> -->
+        <md-card-subtitle *ngIf="subtitle">{{ genres | addCommas }}</md-card-subtitle>
       </md-card-title-group>
       <md-card-content>
-        <p [innerHtml]="description"></p>
+        <div class="md-display-1"> {{albumName }} </div>
+        
+        <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/> 
       </md-card-content>
-      <md-card-footer>
-        <h5 md-subheader>Written By:</h5>
-        <span>
-          {{ authors | addCommas }}
-        </span>
-      </md-card-footer>
       <md-card-actions align="end">
         <button md-raised-button color="warn" *ngIf="inCollection" (click)="remove.emit(audioArtist)">
         Remove Audio Artist from Collection
         </button>
 
         <button md-raised-button color="primary" *ngIf="!inCollection" (click)="add.emit(audioArtist)">
-        Add Audio Artist to Collection
+         Add Audio Artist to Collection
         </button>
       </md-card-actions>
     </md-card>
@@ -61,8 +57,8 @@ export type RemoveOutput = AudioArtist;
       margin-left: 10px;
     }
     img {
-      width: 60px;
-      min-width: 60px;
+      width: 300px;
+      min-width: 300px;
       margin-left: 5px;
     }
     md-card-content {
@@ -94,23 +90,27 @@ export class AudioArtistDetailComponent {
     return this.audioArtist.id;
   }
 
-  get name() {
-    return this.audioArtist.name;
+  get artistName() {
+    return this.audioArtist.artist.name;
   }
 
-  /*get subtitle() {
-    return this.book.volumeInfo.subtitle;
+  get albumName() {
+    return this.audioArtist.album.name;
   }
 
-  get description() {
+  get genres() {
+    return this.audioArtist.album.genres;
+  }
+
+   /*get description() {
     return this.book.volumeInfo.description;
   }
 
   get authors() {
     return this.book.volumeInfo.authors;
   }
-
+*/
   get thumbnail() {
-    return this.book.volumeInfo.imageLinks.smallThumbnail;
-  }*/
+    return this.audioArtist.album.images.length===3?this.audioArtist.album.images[2]: '' ;
+  }
 }

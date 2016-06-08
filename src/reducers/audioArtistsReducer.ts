@@ -24,6 +24,7 @@ export default function(state = initialState, action: Action): AudioArtistState 
         case AudioArtistActions.SEARCH_COMPLETE:
         case AudioArtistActions.ARTIST_REQUEST_COMPLETE:
         case AudioArtistActions.LOAD_COLLECTION_SUCCESS: {
+               console.log("[audioArtistsReducer.js]=---- type= "+action.type);
                 const audioArtists: AudioArtist[] = action.payload;
                 const newArtists = audioArtists.filter(audioArtist => !state.entities[audioArtist.id]);
 
@@ -34,6 +35,7 @@ export default function(state = initialState, action: Action): AudioArtistState 
                     });
                 }, {});
 
+               console.log("[audioArtistsReducer.js]=---- newArtistsEntities =", newArtistsEntities);
                 return {
                     ids: [ ...state.ids, ...newArtistsIds ],
                     entities: Object.assign({}, state.entities, newArtistsEntities)

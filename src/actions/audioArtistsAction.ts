@@ -32,6 +32,8 @@ export class AudioArtistActions {
     
       static SEARCH_COMPLETE = '[AudioArtist] Search Complete';
       searchComplete(results: AudioArtist[]): Action {
+
+         console.log("[AudioArtistActions]=---- searchComplete --results",results);
         return {
           type: AudioArtistActions.SEARCH_COMPLETE,
           payload: results
