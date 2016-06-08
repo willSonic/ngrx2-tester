@@ -18,16 +18,18 @@ export class SpotifyService {
      if (params) {
          queryURL = `${queryURL}?${params.join('&')}`;
      }
-
+    console.log("[SpotifyService]=---- query -- queryURL ="+queryURL);
     return this.http.request(queryURL).map((res: any) => res.json());
   }
 
   search(query: string, type: string): Observable<any[]> {
-        return this.query(`/search`, [ `q=${query}`, `type=${type}` ]);
+        return this.query(`/search`, [ `query=${query}`, `type=${type}` ]);
    }
-   
+    //https://api.spotify.com/v1/search?q=kanye*&type=aritst
+    //https://api.spotify.com/v1/search?q=kanye*&type=artist
+    //'https://api.spotify.com/v1/search?query=kanye&offset=0&limit=10&type=track&market=US
    searchAudioArtist(query: string): Observable<AudioArtist[]> {
-    return this.search(query, 'aritst');
+    return this.search(query +'&offset=0&limit=10&', 'track&market=US');
    }
 
    retrieveAudioArtist(id: string): Observable<AudioArtist> {
@@ -36,6 +38,7 @@ export class SpotifyService {
      return this.http.request(queryURL).map((res: any) => res.json());
    }
    /*
+    https://api.spotify.com/v1/albums/0WAuEfa5Lmg72xfydLVcca/tracks?limit=2
    searchAudioTrack(query: string): Observable<AudioTrack[]> {
      return this.search(query, 'track');
    } 

@@ -4,22 +4,36 @@ interface Image{
        width:number;
 }
 
+interface Artist{
+    external_urls : {
+        spotify: string
+    },
+    href: string,
+    id: string,
+    name: string,
+    type: string,
+    uri: string
+}
 
-
-
-export interface AudioArtist {
+interface Album{
+    album_type:string,
+    available_markets :string[],
     id: string;
+    href:string;
     external_urls:{
         spotify:string;
-    }
-    followers:{
-        href:string;
-        total:number;
     }
     genres:string[];
     images: Image[];
     name:string;
     popularity:string;
+    preview_url:string,
+    track_number:number;
     type:string;
     uri:string;
+}
+
+export interface AudioArtist {
+  album:Album;
+  artist:Artist;
 }
