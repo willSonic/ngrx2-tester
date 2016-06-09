@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { AppState, getSearchResults, getSearchQuery } from '../reducers';
 import { AudioArtistActions } from '../actions';
 import { ArtistSearch, QueryInput, SearchOutput } from '../components/search/artist-search';
+import { AudioArtistPreviewListComponent, AudioArtistsInput } from '../components/artistdisplay/audioArtist-preview-list';
 //import { BookPreviewListComponent, BooksInput } from '../components/book-preview-list';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 
@@ -14,15 +15,35 @@ import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 @Component({
   selector: 'audioArtist-find-page',
   directives: [
-    ArtistSearch
+    ArtistSearch,
+    AudioArtistPreviewListComponent
   ],
-  template: `
-      <artist-search [query]="searchQuery$ | async" (search)="search($event)"></artist-search>
+  styles: [`
+    md-card.search-card{
+      background-color: transparent;
+    }
+    md-card.search-card md-card-content {
+      display: flex;
+      justify-content: center;
+    }
+  `],
+  template: `  
+     <h2 class="search-title"> Spotify Artist Search</h2>
+     <md-card class="search-card">
+      <md-card-content>
+         <div class="search-box" layout="row" layout-align="center center" flex="100">
+           <artist-search [query]="searchQuery$ | async" (search)="search($event)"></artist-search>
+         </div>
+      </md-card-content>
+    </md-card>
+    <div layout="row"  flex="100">
+         <audioartist-preview-list [audioArtists]="audioArtists$ | async"></audioartist-preview-list>
+    </div>
   `,
 })
 export class AudioArtistFindPage {
   searchQuery$: Observable<QueryInput>;
-  //audioArtists$: Observable<AudioArtistsInput>;
+  audioArtists$: Observable<AudioArtistsInput>;
 
   constructor(private store: Store<AppState>, private audioArtistActions: AudioArtistActions) {
     /**
@@ -34,7 +55,7 @@ export class AudioArtistFindPage {
      * More on selectors: https://gist.github.com/btroncone/a6e4347326749f938510#extracting-selectors-for-reuse
      */
     this.searchQuery$ = store.let(getSearchQuery()).take(1);
-    //this.audioArtists$ = store.let(getSearchResults());
+    this.audioArtists$ = store.let(getSearchResults());
   }
 
   search(query: SearchOutput) {

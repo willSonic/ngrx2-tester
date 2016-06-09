@@ -9,7 +9,7 @@ const routes: Routes = [
     guards: [ CollectionExistGuard ],
     loadComponent: () => new Promise(resolve => {
       (require as any).ensure([], require => {
-        resolve(require('./pages/collection').CollectionPage);
+        resolve(require('./pages/collection-page').CollectionPage);
       });
     })
   },
@@ -17,7 +17,7 @@ const routes: Routes = [
     path: '/audioArtist/find',
     loadComponent: () => new Promise(resolve => {
       (require as any).ensure([], require => {
-        resolve(require('./pages/audio-artist-find').AudioArtistFindPage);
+        resolve(require('./pages/audioartist-find-page').AudioArtistFindPage);
       });
     })
   },
@@ -26,7 +26,7 @@ const routes: Routes = [
     guards: [ AudioArtistExistsGuard ],
     loadComponent: () => new Promise(resolve => {
       (require as any).ensure([], require => {
-        resolve(require('./pages/audio-artist-view').AudioArtistViewPage);
+        resolve(require('./pages/audioartist-view-page').AudioArtistViewPage);
       });
     })
   },
@@ -34,7 +34,7 @@ const routes: Routes = [
     path: '/*',
     loadComponent: () => new Promise(resolve => {
       (require as any).ensure([], require => {
-        resolve(require('./pages/not-found').NotFoundPage);
+        resolve(require('./pages/not-found-page').NotFoundPage);
       });
     })
   }

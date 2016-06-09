@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { AudioArtistPreviewComponent, AudioArtistInput } from './audioArtist-preview';
 
-export type AudioArtistInput = AudioArtistInput[];
+export type AudioArtistsInput = AudioArtistInput[];
 
 @Component({
   selector: 'audioartist-preview-list',
@@ -19,5 +19,5 @@ export type AudioArtistInput = AudioArtistInput[];
   `]
 })
 export class AudioArtistPreviewListComponent {
-  @Input() audioArtists: AudioArtistInput;
+  @Input() audioArtists: AudioArtistsInput;
 }

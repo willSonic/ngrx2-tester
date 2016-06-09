@@ -1,9 +1,10 @@
-body{
-
+html, body{
     background-color:#65788b;
+    background:#65788b;
     color:#0082CB;
     margin:0;
 }
+
 .full-width{
    width:100%;
 }

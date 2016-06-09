@@ -1,16 +1,12 @@
-
-
-     <div>
-          <h2 class="search-title"> Spotify Artist Search</h2>
-         <div class="md-inline-form search-box" layout="row" layout-align="center center" flex="100">
-              <form layout="column" layout-align="center center" flex="70">
-                     <md-input  class="full-width" placeholder="Artist Name..."
-                                 [value]="query" (keyup)="keyup$.next($event)">
-                    </md-input>
-              </form>
-                     <button md-button  type="submit" class="md-icon-button search-icon" aria-label="Search">
-                        <i md-icon>search</i>
-                     </button>
-         </div>
+<div>
+     <div class="md-inline-form search-box" layout="row" layout-align="center center" flex="100">
+          <form layout="column" layout-align="center center" flex="70">
+                 <md-input  class="full-width" placeholder="Artist Name..."
+                             [value]="query" (keyup)="keyup$.next($event)">
+                </md-input>
+          </form>
+         <button md-button  type="submit" class="md-icon-button search-icon" aria-label="Search">
+            <i md-icon>search</i>
+         </button>
      </div>
-    <!-- <route-view></route-view> -->
+ </div>
