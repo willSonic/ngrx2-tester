@@ -57,12 +57,9 @@ html, body{
     background-image: linear-gradient(#4e5d6c, #65788b, 40%, #1c1c1c;);
     color: #2aa4c9;
 }
-.app-content{
- margin:8px;
-}
 
 .app-content md-card {
-    margin: 20px;
+    margin: 10px;
 }
 
 .app-sidenav {

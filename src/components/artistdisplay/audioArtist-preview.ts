@@ -41,6 +41,7 @@ export type AudioArtistInput = AudioArtist;
       width: 400px;
       height: 300px;
       margin: 15px;
+      background-color:#5f84a5;
     }
     md-card-title {
       margin-right: 10px;

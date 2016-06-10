@@ -1,10 +1,8 @@
-<div>
+<div layout-fill>
      <div class="md-inline-form search-box" layout="row" layout-align="center center" flex="100">
-          <form layout="column" layout-align="center center" flex="70">
-                 <md-input  class="full-width" placeholder="Artist Name..."
+          <md-input layout-fill  placeholder="Artist Name..." layout-align="center center" flex="75"
                              [value]="query" (keyup)="keyup$.next($event)">
-                </md-input>
-          </form>
+          </md-input>
          <button md-button  type="submit" class="md-icon-button search-icon" aria-label="Search">
             <i md-icon>search</i>
          </button>

@@ -58,7 +58,7 @@ import collectionReducer, * as fromCollection from './collectionReducer';
 export interface AppState {
   router: RouterState;
   search: fromSearch.SearchState;
-  audioartists: fromAudioArtists.AudioArtistState;
+   audioArtists: fromAudioArtists.AudioArtistState;
   collection: fromCollection.CollectionState;
 }
 
@@ -71,10 +71,10 @@ export interface AppState {
  * the result from right to left.
  */
 export default compose(storeLogger(), combineReducers)({
-  router: routerReducer,
-  search: searchReducer,
-  audioartists: audioArtistsReducer,
-  collection: collectionReducer
+    router: routerReducer,
+    search: searchReducer,
+    audioArtists: audioArtistsReducer,
+    collection: collectionReducer
 });
 
 
@@ -96,7 +96,7 @@ export default compose(storeLogger(), combineReducers)({
  */
  export function getAudioArtistsState() {
   return (state$: Observable<AppState>) => state$
-    .select(s => s.audioartists);
+    .select(s => s. audioArtists);
 }
 
 /**

@@ -22,7 +22,7 @@ import {MATERIAL_DIRECTIVES } from 'ng2-material';
 		  color: rgba(0, 0, 0, .54);
 		}
 		md-content.app-content {
-		   background-color:#65788b
+		   background-color:#65788b;
 		}
   `],
 	template:`
@@ -31,9 +31,9 @@ import {MATERIAL_DIRECTIVES } from 'ng2-material';
 					<span class="app-toolbar-filler"></span>
 				</md-toolbar>
 				
-				<md-content class="app-content" layout-fill layout="column">
+				<div class="app-content" layout-fill layout="column">
                        <route-view></route-view>      
-                </md-content>
+                </div>
              `
 })
 export default class App {}

@@ -35,7 +35,7 @@ export default function(state = initialState, action: Action): AudioArtistState 
                     });
                 }, {});
 
-               console.log("[audioArtistsReducer.js]=---- newArtistsEntities =", newArtistsEntities);
+               console.log("[audioArtistsReducer.js]=-AudioArtistActions.LOAD_COLLECTION_SUCCESS:--- newArtistsEntities =", newArtistsEntities);
                 return {
                     ids: [ ...state.ids, ...newArtistsIds ],
                     entities: Object.assign({}, state.entities, newArtistsEntities)
@@ -74,6 +74,7 @@ export function getAudioArtist(id: string) {
   return (state$: Observable<AudioArtistState>) => state$
     .select(s => s.entities[id]);
 };
+
 export function getAudioArtists(audioArtistIds: string[]) {
     return (state$: Observable<AudioArtistState>) => state$
         .let(getAudioArtistEntities())

@@ -20,7 +20,7 @@ import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
   ],
   styles: [`
     md-card.search-card{
-      background-color: transparent;
+      background-color:#5f84a5;
     }
     md-card.search-card md-card-content {
       display: flex;
@@ -28,17 +28,13 @@ import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
     }
   `],
   template: `  
-     <h2 class="search-title"> Spotify Artist Search</h2>
-     <md-card class="search-card">
-      <md-card-content>
-         <div class="search-box" layout="row" layout-align="center center" flex="100">
-           <artist-search [query]="searchQuery$ | async" (search)="search($event)"></artist-search>
-         </div>
-      </md-card-content>
-    </md-card>
-    <div layout="row"  flex="100">
+      <h2 class="search-title"> Spotify Artist Search</h2>
+      <div class="search-box" layout="row" layout-align="center center" flex="100">
+        <artist-search layout-fill [query]="searchQuery$ | async" (search)="search($event)"></artist-search>
+      </div>
+      <div layout="row"  flex="100">
          <audioartist-preview-list [audioArtists]="audioArtists$ | async"></audioartist-preview-list>
-    </div>
+      </div>
   `,
 })
 export class AudioArtistFindPage {
