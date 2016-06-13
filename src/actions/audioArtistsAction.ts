@@ -16,12 +16,11 @@ export class AudioArtistActions {
     
       static SEARCH_COMPLETE = '[AudioArtist] Search Complete';
       searchComplete(results: AudioArtist[]): Action {
-
-         console.log("[AudioArtistActions]=---- searchComplete --results",results);
-        return {
-          type: AudioArtistActions.SEARCH_COMPLETE,
-          payload: results
-        };
+            console.log("[AudioArtistActions]=---- searchComplete --results",results);
+            return {
+              type: AudioArtistActions.SEARCH_COMPLETE,
+              payload: results
+            };
       }
     
       static ADD_TO_COLLECTION = '[AudioArtist] Add to Collection';
@@ -74,6 +73,7 @@ export class AudioArtistActions {
     
       static LOAD_COLLECTION = '[AudioArtist] Load Collection';
       loadCollection(): Action {
+          console.log("[AudioArtistActions]=---- LOAD_COLLECTION --results");
         return {
           type: AudioArtistActions.LOAD_COLLECTION
         };

@@ -81,12 +81,11 @@ export class AudioArtistEffects {
     );
 
 
-  @Effect() clearAudioArtistSearch$ = this.updates$
+    @Effect() clearAudioArtistSearch$ = this.updates$
     .whenAction(AudioArtistActions.SEARCH)
     .map<string>(toPayload)
     .filter(query => query === '')
     .mapTo(this.audioArtistActions.searchComplete([]));
-
 
 
   @Effect() addAlbumToCollection$ = this.updates$
