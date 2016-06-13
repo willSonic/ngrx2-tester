@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { AudioArtist, Album } from '../../models';
+import {  Album } from '../../models';
 import { AddCommasPipe } from '../../pipes/add-commas';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
@@ -12,10 +12,9 @@ import { MdButton } from '@angular2-material/button';
  * component's API with type safety.
  */
 export type AlbumInput = Album;
-export type AudioArtistInput = AudioArtist;
 export type InCollectionInput = boolean;
-export type AddOutput = AudioArtist;
-export type RemoveOutput = AudioArtist;
+export type AddOutput = Album;
+export type RemoveOutput = Album;
 
 @Component({
   selector: 'audioartist-detail',
@@ -25,8 +24,7 @@ export type RemoveOutput = AudioArtist;
     <md-card>
       <md-card-title-group>
         <md-card-title>{{ artistName }}</md-card-title>
-       <!-- <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/> -->
-        <md-card-subtitle *ngIf="subtitle">{{ genres | addCommas }}</md-card-subtitle>
+       <!--  <md-card-subtitle *ngIf="subtitle">{{ genres | addCommas }}</md-card-subtitle>-->
       </md-card-title-group>
       <md-card-content>
         <div class="md-display-1"> {{albumName }} </div>
@@ -75,7 +73,7 @@ export type RemoveOutput = AudioArtist;
     }
   `]
 })
-export class AudioArtistDetailComponent {
+export class AlbumDetailComponent {
   /**
    * Dumb components receieve data through @Input() and communicate events
    * through @Output() but generally maintain no internal state of their
@@ -86,28 +84,25 @@ export class AudioArtistDetailComponent {
    *
    * Tip: Utilize getters to keep templates clean in 'dumb' components.
    */
-  @Input() audioArtist: AudioArtistInput;
+  @Input() album: AlbumInput;
   @Input() inCollection: InCollectionInput;
   @Output() add = new EventEmitter<AddOutput>();
   @Output() remove = new EventEmitter<RemoveOutput>();
 
   get id() {
-    return this.audioArtist.album.id;
+    return this.album.id;
   }
-/*
-  get artistName() {
-    return this.audioArtist.artist.name;
-  }
-*/
+
   get albumName() {
-    return this.audioArtist.album.name;
+    return this.album.name;
   }
+   /*
 
   get genres() {
     return this.audioArtist.album.genres;
   }
 
-   /*get description() {
+get description() {
     return this.book.volumeInfo.description;
   }
 
@@ -115,7 +110,11 @@ export class AudioArtistDetailComponent {
     return this.book.volumeInfo.authors;
   }
 */
-  get thumbnail() {
-    return this.audioArtist.album.images.length===3?this.audioArtist.album.images[2].url: '' ;
+ get thumbnail():string | boolean {
+    if (this.album.images.length >0) {
+      return this.album.images[1].url;
+    }
+
+    return false;
   }
 }

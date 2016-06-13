@@ -21,7 +21,24 @@ const initialState: AlbumState = {
 export default function(state = initialState, action: Action): AlbumState {
               // console.log("[albumReducer.js]=---- AlbumState STATE=");
     switch (action.type) {
+        case AlbumActions.SEARCH_COMPLETE_FROM_AUDIOARTIST:{
+               console.log("[albumReducer.js]=---- action.payload= "+action.payload);
+                const albums: Album[] = action.payload.map(audioArtist =>audioArtist.album);
+                const newAlbums = albums.filter(album => !state.entities[album.id]);
 
+                const newAlbumsIds = newAlbums.map(album => album.id);
+                const newAlbumsEntities = newAlbums.reduce((entities: { [id: string]: Album }, album: Album) => {
+                    return Object.assign(entities, {
+                        [album.id]: album
+                    });
+                }, {});
+
+               console.log("[albumReducer.js]=-AlbumAction.LOAD_COLLECTION_SUCCESS:--- newAlbumsEntities =", newAlbumsEntities);
+                return {
+                    ids: [ ...state.ids, ...newAlbumsIds ],
+                    entities: Object.assign({}, state.entities, newAlbumsEntities)
+                };
+            }
         case AlbumActions.SEARCH_COMPLETE_ALBUM:
         case AlbumActions.LOAD_COLLECTION_SUCCESS: {
                console.log("[albumReducer.js]=---- type= "+action.type);

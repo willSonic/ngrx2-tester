@@ -61,7 +61,7 @@ export type AlbumInput =Album;
     }
   `],
   template: `
-    <a [linkTo]=" '/audioArtist/' + id">
+    <a [linkTo]=" '/album/' + id">
       <md-card>
         <md-card-title-group>
           <md-card-title>{{ artists | addCommas}}</md-card-title>
@@ -86,7 +86,7 @@ export class AudioArtistPreviewComponent {
   @Input() audioArtist: AudioArtistInput;
 
   get id() {
-    return this.audioArtist.id;
+    return this.audioArtist.album.id;
   }
 
   get artists() {

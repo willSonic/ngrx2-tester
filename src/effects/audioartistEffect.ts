@@ -60,8 +60,8 @@ export class AudioArtistEffects {
     .filter(query => query !== '')
     .switchMap(query => this.spotifyArtists.searchAudioArtist(query)
       .map(audioArtists => this.albumActions.searchAlbumComplete(audioArtists))
-      .catch(() => Observable.of(this.albumActions.searchAlbumComplete([])))
-    );
+      .catch(() => Observable.of(this.albumActions.searchAlbumComplete([]) ))
+      );
 
   @Effect() clearSearch$ = this.updates$
     .whenAction(AlbumActions.SEARCH_ALBUM)
@@ -71,15 +71,29 @@ export class AudioArtistEffects {
 
 
 
+
+  @Effect() addAlbumsFromAudioArtistSearh$ = this.updates$
+      .whenAction(AudioArtistActions.SEARCH_COMPLETE)
+      .map<AudioArtist[]>(toPayload)
+      .map((audioArtists:AudioArtist[]) =>  this.albumActions.loadAlbumsFromAudioArtist(audioArtists))
+      .catch(() => Observable.of(this.albumActions.searchAlbumComplete([])));
+
+
+  @Effect() clearAlbumsFromAudioArtistSearh$ = this.updates$
+      .whenAction(AudioArtistActions.SEARCH)
+      .map<string>(toPayload)
+      .filter(query => query !== '')
+      .mapTo(this.albumActions.searchAlbumComplete([]));
+
+
   @Effect() audioArtistSearch$ = this.updates$
     .whenAction(AudioArtistActions.SEARCH)
     .map<string>(toPayload)
     .filter(query => query !== '')
     .switchMap(query => this.spotifyArtists.searchAudioArtist(query)
       .map(audioArtists => this.audioArtistActions.searchComplete(audioArtists))
-      .catch(() => Observable.of(this.audioArtistActions.searchComplete([])))
+      .catch(() => Observable.of(this.audioArtistActions.searchComplete([]) ))
     );
-
 
     @Effect() clearAudioArtistSearch$ = this.updates$
     .whenAction(AudioArtistActions.SEARCH)

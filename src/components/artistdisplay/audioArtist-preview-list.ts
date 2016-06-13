@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { AudioArtistPreviewComponent, AudioArtistInput, AlbumInput } from './audioArtist-preview';
 
 export type AudioArtistsInput = AudioArtistInput[];
-export type AlbumInput =AlbumInput[];
+export type AlbumInput = AlbumInput[];
 
 @Component({
   selector: 'audioartist-preview-list',

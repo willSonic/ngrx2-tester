@@ -5,53 +5,53 @@ import { RouteParams } from '@ngrx/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState, getAudioArtist, isAlbumInCollection } from '../reducers';
-import { AudioArtistActions } from '../actions/audioArtistsAction';
+import { AppState, getAlbum, isAlbumInCollection } from '../reducers';
+import { AlbumActions } from '../actions/albumsAction';
 import {
-  AudioArtistDetailComponent,
-  AudioArtistInput,
+  AlbumDetailComponent,
+  AlbumInput,
   InCollectionInput,
   AddOutput,
   RemoveOutput
-} from '../components/artistdisplay/audioArtist-detail';
+} from '../components/artistdisplay/album-detail';
 
 
 @Component({
   selector: 'audioartist-view-page',
-  directives: [ AudioArtistDetailComponent ],
+  directives: [ AlbumDetailComponent ],
   template: `
     <audioartist-detail
-      [audioArtist]="audioArtist$ | async"
-      [inCollection]="isAudioArtistInCollection$ | async"
+      [album]="album$ | async"
+      [inCollection]="isAlbumInCollection$ | async"
       (add)="addToCollection($event)"
       (remove)="removeFromCollection($event)">
     </audioartist-detail>
   `
 })
 export class AudioArtistViewPage {
-  audioArtist$: Observable<AudioArtistInput>;
-  isAudioArtistInCollection$: Observable<InCollectionInput>;
+  album$: Observable<AlbumInput>;
+  isAlbumInCollection$: Observable<InCollectionInput>;
 
   constructor(
     private store: Store<AppState>,
-    private audioArtistActions: AudioArtistActions,
+    private albumActions: AlbumActions,
     private routeParams$: RouteParams
   ) {
-    this.audioArtist$ = routeParams$
+    this.album$ = routeParams$
       .select<string>('id')
-      .switchMap(id => store.let(getAudioArtist(id)));
+      .switchMap(id => store.let(getAlbum(id)));
 
-    this.isAudioArtistInCollection$ = routeParams$
+    this.isAlbumInCollection$ = routeParams$
       .select<string>('id')
       .switchMap(id => store.let(isAlbumInCollection(id)));
 
   }
 
-  addToCollection(audioArtist: AddOutput) {
-    this.store.dispatch(this.audioArtistActions.addToCollection(audioArtist));
+  addToCollection(album: AddOutput) {
+    this.store.dispatch(this.albumActions.addToCollection(album));
   }
 
-  removeFromCollection(audioArtist: RemoveOutput) {
-    this.store.dispatch(this.audioArtistActions.removeFromCollection(audioArtist));
+  removeFromCollection(album: RemoveOutput) {
+    this.store.dispatch(this.albumActions.removeFromCollection(album));
   }
 }

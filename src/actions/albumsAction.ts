@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Action} from "@ngrx/store";
-import { Album } from '../models';
+import { Album, AudioArtist } from '../models';
 
 
 @Injectable()
 export class AlbumActions {
-     static SEARCH_ALBUM = '[Album] Search';
+     static SEARCH_ALBUM = '[Album] SEARCH_ALBUM';
       searchAlbum(query: string): Action {
         return {
           type: AlbumActions.SEARCH_ALBUM,
@@ -23,6 +23,15 @@ export class AlbumActions {
         };
       }
 
+     static SEARCH_COMPLETE_FROM_AUDIOARTIST = '[Album] Search Complete for Audio Artist';
+      loadAlbumsFromAudioArtist(results: AudioArtist[]): Action {
+         console.log("[AlbumActions]=---- SEARCH_COMPLETE_FROM_AUDIOARTIST --results",results);
+        return {
+          type: AlbumActions.SEARCH_COMPLETE_FROM_AUDIOARTIST,
+          payload: results
+        };
+      }
+
       static ADD_TO_COLLECTION = '[Album] Add to Collection';
       addToCollection(album: Album): Action {
         return {
@@ -32,10 +41,10 @@ export class AlbumActions {
       }
 
       static ADD_TO_COLLECTION_SUCCESS = '[Album] Add to Collection Success';
-      addToCollectionSuccess(audioArtist: Album): Action {
+      addToCollectionSuccess(album: Album): Action {
         return {
           type: AlbumActions.ADD_TO_COLLECTION_SUCCESS,
-          payload: audioArtist
+          payload: album
         };
       }
 

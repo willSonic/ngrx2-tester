@@ -2,8 +2,9 @@ import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-//import { AudioTrack } from '../models';
 import { AudioArtist } from '../models';
+import { Album } from '../models';
+
 
 @Injectable()
 export class SpotifyService {
@@ -34,7 +35,7 @@ export class SpotifyService {
     return this.search(query +'&offset=0&limit=10&', 'track&market=US');
    }
 
-   retrieveAudioArtist(id: string): Observable<AudioArtist> {
+   retrieveAlbum(id: string): Observable<Album> {
      let queryURL: string =  `${SpotifyService.BASE_URL}`+'/albums/'+id+'/tracks?limit=2';
      return this.http.request(queryURL).map((res: any) => res.json());
    }

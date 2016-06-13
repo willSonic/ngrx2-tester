@@ -7,8 +7,8 @@ import { Guard, TraversalCandidate, Router } from '@ngrx/router';
 import { Observable } from 'rxjs/Observable';
 
 import { SpotifyService } from '../services/SpotifyService';
-import { AppState, hasAudioArtist, getCollectionLoaded } from '../reducers';
-import { AudioArtistActions } from '../actions/audioArtistsAction';
+import { AppState, hasAlbum,  getCollectionLoaded } from '../reducers';
+import { AlbumActions } from '../actions/albumsAction';
 
 
 /**
@@ -24,7 +24,7 @@ export class AudioArtistExistsGuard implements Guard {
   constructor(
     private store: Store<AppState>,
     private spotifyArtists: SpotifyService,
-    private audioArtistActions: AudioArtistActions,
+    private albumActions: AlbumActions,
     private _router: Router
   ) { }
 
@@ -44,21 +44,21 @@ export class AudioArtistExistsGuard implements Guard {
    * This method checks if a book with the given ID is already registered
    * in the Store
    */
-  hasAudioArtistInStore(id: string) {
-    console.log('[AudioArtistExistsGuard] ----  hasAudioArtistInStore === id '+id);
-    return this.store.let(hasAudioArtist(id)).take(1);
+  hasAlbumInStore(id: string) {
+    console.log('[AudioArtistExistsGuard] ----  hasAlbumInStore === id '+id);
+    return this.store.let(hasAlbum(id)).take(1);
   }
 
   /**
    * This method loads a book with the given ID from the API and caches
    * it in the store, returning `true` or `false` if it was found.
    */
-  hasAudioArtistInApi(id: string) {
-    console.log('[AudioArtistExistsGuard] ----  hasAudioArtistInApi === id '+id);
-    return this.spotifyArtists.retrieveAudioArtist(id)
-      .map(audioArtist => this.audioArtistActions.loadAudioArtist(audioArtist))
+  hasAlbumInApi(id: string) {
+    console.log('[AudioArtistExistsGuard] ----  hasAlbumInApi === id '+id);
+    return this.spotifyArtists.retrieveAlbum(id)
+      .map(album => this.albumActions.loadAlbum(album))
       .do(action => this.store.dispatch(action))
-      .map(audioArtist => !!audioArtist)
+      .map(album => !!album)
       .catch(() => Observable.of(false));
   }
 
@@ -67,14 +67,14 @@ export class AudioArtistExistsGuard implements Guard {
    * if the book is in store, and if not it then checks if it is in the
    * API.
    */
-  hasAudioArtist(id: string) {
-  console.log('[AudioArtistExistsGuard] ----  hasAudioArtist === id ='+ id);
-    return this.hasAudioArtistInStore(id)
+  hasAlbum(id: string) {
+  console.log('[AudioArtistExistsGuard] ----  hasAlbum === id ='+ id);
+    return this.hasAlbumInStore(id)
       .switchMap(inStore => {
         if (inStore) {
           return Observable.of(inStore);
         }
-        return this.hasAudioArtistInApi(id);
+        return this.hasAlbumInApi(id);
       });
   }
 
@@ -94,6 +94,6 @@ export class AudioArtistExistsGuard implements Guard {
   protectRoute({ routeParams: { id } }: TraversalCandidate) {
      console.log('[AudioArtistExistsGuard] ----  protectRoute === routeParams ='+ id);
     return this.waitForCollectionToLoad()
-      .switchMapTo(this.hasAudioArtist(id));
+      .switchMapTo(this.hasAlbum(id));
   }
 }
