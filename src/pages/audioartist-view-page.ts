@@ -5,7 +5,7 @@ import { RouteParams } from '@ngrx/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState, getAudioArtist, isAudioArtistInCollection } from '../reducers';
+import { AppState, getAudioArtist, isAlbumInCollection } from '../reducers';
 import { AudioArtistActions } from '../actions/audioArtistsAction';
 import {
   AudioArtistDetailComponent,
@@ -43,7 +43,8 @@ export class AudioArtistViewPage {
 
     this.isAudioArtistInCollection$ = routeParams$
       .select<string>('id')
-      .switchMap(id => store.let(isAudioArtistInCollection(id)));
+      .switchMap(id => store.let(isAlbumInCollection(id)));
+
   }
 
   addToCollection(audioArtist: AddOutput) {

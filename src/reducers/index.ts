@@ -47,6 +47,7 @@ import { routerReducer, RouterState } from '@ngrx/router-store';
  * notation packages up all of the exports into a single object.
  */
 import searchReducer, * as fromSearch from './searchReducer';
+import albumsReducer, * as fromAlbums from './albumReducer';
 import audioArtistsReducer, * as fromAudioArtists from './audioArtistsReducer';
 import collectionReducer, * as fromCollection from './collectionReducer';
 
@@ -58,7 +59,8 @@ import collectionReducer, * as fromCollection from './collectionReducer';
 export interface AppState {
   router: RouterState;
   search: fromSearch.SearchState;
-   audioArtists: fromAudioArtists.AudioArtistState;
+  albums: fromAlbums.AlbumState;
+  audioArtists: fromAudioArtists.AudioArtistState;
   collection: fromCollection.CollectionState;
 }
 
@@ -73,6 +75,7 @@ export interface AppState {
 export default compose(storeLogger(), combineReducers)({
     router: routerReducer,
     search: searchReducer,
+    albums:albumsReducer,
     audioArtists: audioArtistsReducer,
     collection: collectionReducer
 });
@@ -95,6 +98,7 @@ export default compose(storeLogger(), combineReducers)({
  * ```
  */
  export function getAudioArtistsState() {
+  console.log("reducer index.ts --- getAudioArtistsState");
   return (state$: Observable<AppState>) => state$
     .select(s => s. audioArtists);
 }
@@ -114,6 +118,7 @@ export default compose(storeLogger(), combineReducers)({
  }
 
  export function getAudioArtist(id: string) {
+    console.log('[index.ts reducers] --getAudioArtist id'+id);
    return compose(fromAudioArtists.getAudioArtist(id), getAudioArtistsState());
  }
 
@@ -123,6 +128,38 @@ export default compose(storeLogger(), combineReducers)({
 
  export function getAudioArtists(audioArtistIds: string[]) {
    return compose(fromAudioArtists.getAudioArtists(audioArtistIds), getAudioArtistsState());
+ }
+
+
+
+
+
+/**
+ * Just like with the a;bi, selectors, we also have to compose the search
+ * reducer's and collection reducer's selectors.
+ */
+ export function geAlbumsState() {
+  return (state$: Observable<AppState>) => state$
+    .select(s => s.albums);
+}
+
+/**
+ */
+ export function getAlbumEntities() {
+   return compose(fromAlbums.getAlbumEntities(), geAlbumsState());
+ }
+
+ export function getAlbum(id: string) {
+    console.log('[index.ts reducers] --getAlbum id'+id);
+   return compose(fromAlbums.getAlbum(id), geAlbumsState());
+ }
+
+ export function hasAlbum(id: string) {
+   return compose(fromAlbums.hasAlbum(id), geAlbumsState());
+ }
+
+ export function getAlbums(albumIds: string[]) {
+   return compose(fromAlbums.getAlbums(albumIds), geAlbumsState());
  }
 
 
@@ -144,6 +181,7 @@ export function getSearchStatus() {
 }
 
 export function getSearchQuery() {
+  console.log('Do getSearchQuery Querry for Arist')
   return compose(fromSearch.getQuery(), getSearchState());
 }
 
@@ -152,6 +190,7 @@ export function getSearchQuery() {
  * composes the search result IDs to return an array of books in the store.
  */
 export function getSearchResults() {
+  console.log('Do getSearchResults Querry for Arist')
   return (state$: Observable<AppState>) => state$
     .let(getSearchAudioArtistIds())
     .switchMap(audioArtistIds => state$.let(getAudioArtists(audioArtistIds)));
@@ -172,16 +211,18 @@ export function getCollectionLoading() {
   return compose(fromCollection.getLoading(), getCollectionState());
 }
 
-export function getCollectionAudioArtistIds() {
-  return compose(fromCollection.getAudioArtistIds(), getCollectionState());
+export function getCollectionAlbumIds() {
+  return compose(fromCollection.getAlbumsIds(), getCollectionState());
 }
 
-export function isAudioArtistInCollection(id: string) {
-  return compose(fromCollection.isAudioArtistInCollection(id), getCollectionState());
+export function isAlbumInCollection(id: string) {
+  return compose(fromCollection.isAlbumInCollection(id), getCollectionState());
 }
 
-export function getAudioArtistCollection() {
+export function getAlbumCollection() {
+  console.log('Do getAlbumCollection Querry for Album')
+
   return (state$: Observable<AppState>) => state$
-    .let(getCollectionAudioArtistIds())
-    .switchMap(audioArtistIds => state$.let(getAudioArtists(audioArtistIds)));
+    .let(getCollectionAlbumIds())
+    .switchMap(albumIds => state$.let(getAlbums(albumIds)));
 }

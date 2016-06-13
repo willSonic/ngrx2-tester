@@ -23,18 +23,19 @@ export class SpotifyService {
   }
 
   search(query: string, type: string): Observable<AudioArtist[]> {
+         console.log("[SpotifyService]=---- search");
         return this.query(`/search`, [ `query=${query}`, `type=${type}` ]);
    }
     //https://api.spotify.com/v1/search?q=kanye*&type=aritst
     //https://api.spotify.com/v1/search?q=kanye*&type=artist
     //'https://api.spotify.com/v1/search?query=kanye&offset=0&limit=10&type=track&market=US
    searchAudioArtist(query: string): Observable<any[]> {
+    console.log("[SpotifyService]=---- searchAudioArtists");
     return this.search(query +'&offset=0&limit=10&', 'track&market=US');
    }
 
    retrieveAudioArtist(id: string): Observable<AudioArtist> {
-
-     let queryURL: string =  `${SpotifyService.BASE_URL}${URL}`;
+     let queryURL: string =  `${SpotifyService.BASE_URL}`+'/albums/'+id+'/tracks?limit=2';
      return this.http.request(queryURL).map((res: any) => res.json());
    }
    /*

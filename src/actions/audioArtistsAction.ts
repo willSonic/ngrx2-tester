@@ -5,25 +5,9 @@ import { AudioArtist } from '../models';
 
 @Injectable()
 export class AudioArtistActions {
-
-     static REQUEST_ARTISTS = '[audioArtist] Request Artist';
-     requestArtist(query: string): Action {
-         return {
-              type:AudioArtistActions.REQUEST_ARTISTS,
-              payload:query
-         };
-     }
-      static ARTIST_REQUEST_COMPLETE = '[Artist] Artist Request Complete';
-      artistRequestComplete(results: AudioArtist[]): Action {
-        return {
-          type: AudioArtistActions.ARTIST_REQUEST_COMPLETE,
-          payload: results
-        };
-      }
-      
-      
      static SEARCH = '[AudioArtist] Search';
       search(query: string): Action {
+         console.log("[AudioArtistActions]=---- SEARCH --results",query);
         return {
           type: AudioArtistActions.SEARCH,
           payload: query
@@ -90,7 +74,6 @@ export class AudioArtistActions {
     
       static LOAD_COLLECTION = '[AudioArtist] Load Collection';
       loadCollection(): Action {
-console.log("[AudioArtist] Load Collection")
         return {
           type: AudioArtistActions.LOAD_COLLECTION
         };
@@ -106,6 +89,7 @@ console.log("[AudioArtist] Load Collection")
     
       static LOAD_AUDIOARTIST = '[AudioArtist] Load AudioArtist';
       loadAudioArtist(audioArtist: AudioArtist): Action {
+        console.log('[audioArtistAction.ts] --- LOAD_AUDIOARTIST---')
         return {
           type: AudioArtistActions.LOAD_AUDIOARTIST,
           payload: audioArtist

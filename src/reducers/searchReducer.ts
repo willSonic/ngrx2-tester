@@ -21,6 +21,7 @@ const initialState: SearchState = {
 export default function(state = initialState, action: Action): SearchState {
   switch (action.type) {
     case AudioArtistActions.SEARCH: {
+      console.log('Do Search')
       const query = action.payload;
 
       return Object.assign(state, {
@@ -30,6 +31,7 @@ export default function(state = initialState, action: Action): SearchState {
     }
 
     case AudioArtistActions.SEARCH_COMPLETE: {
+      console.log('Do SEARCH_COMPLETE')
       const audioArtists: AudioArtist[] = action.payload;
 
       return {

@@ -4,15 +4,15 @@ import { Pipe } from '@angular/core';
   name: 'addCommas'
 })
 export class AddCommasPipe {
-  transform(authors) {
-    switch (authors.length) {
+  transform(artists) {
+    switch (artists.length) {
       case 1:
-        return authors[0];
+        return artists[0].name;
       case 2:
-        return authors.join(' and ');
+        return artists.map((artist) => { return artist.name;}).join(' and ');
       default:
-        const last = authors[authors.length - 1];
-        const remaining = authors.slice(0, -1);
+        const last = artists[artists.length - 1].name;
+        const remaining = artists.slice(0, -1).map((artist) => { return artist.name;});
         return `${remaining.join(', ')}, and ${last}`;
     }
   }

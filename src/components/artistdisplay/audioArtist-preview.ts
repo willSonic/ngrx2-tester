@@ -16,26 +16,6 @@ export type AudioArtistInput = AudioArtist;
     MD_CARD_DIRECTIVES,
     MD_LIST_DIRECTIVES
   ],
-  template: `
-    <a [linkTo]=" '/audioArtist/' + id">
-      <md-card>
-        <md-card-title-group>
-          <md-card-title>{{ name }}</md-card-title>
-          <!--<md-card-subtitle *ngIf="subtitle">{{ subtitle }}</md-card-subtitle>
-          <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>-->
-        </md-card-title-group>
-        <md-card-content>
-          <p *ngIf="description">{{ description | ellipsis }}</p>
-        </md-card-content>
-       <!-- <md-card-footer>
-          <h5 md-subheader>Written By:</h5>
-          <span>
-            {{ authors | addCommas }}
-          </span>
-        </md-card-footer>-->
-      </md-card>
-    </a>
-  `,
   styles: [`
     md-card {
       width: 400px;
@@ -45,27 +25,61 @@ export type AudioArtistInput = AudioArtist;
     }
     md-card-title {
       margin-right: 10px;
+      padding:0 10px 0;
     }
+    
     a {
-      color: inherit;
+      color: #EBEBEB;
       text-decoration: none;
     }
+    p {
+       font-size: 1.2em;
+       font-weight:300;
+       color: #EBEBEB;
+       margin-left:10px;
+    }
     img {
-      width: 60px;
-      min-width: 60px;
+      width: 166px;
+      height:130px;
+      min-width: 83px;
+      min-height: 65px;
       margin-left: 5px;
     }
     md-card-content {
-      margin-top: 15px;
+      margin-top: 5px;
     }
     span {
-      display: inline-block;
-      font-size: 13px;
+       display: inline-block;
+       font-weight:300;
+       font-size: 1em;
+       color: #EBEBEB;
+       margin-left:10px;
     }
     md-card-footer {
-      padding-bottom: 25px;
+      padding-bottom: 15px;
     }
-  `]
+  `],
+  template: `
+    <a [linkTo]=" '/audioArtist/' + id">
+      <md-card>
+        <md-card-title-group>
+          <md-card-title>{{ artists | addCommas}}</md-card-title>
+        </md-card-title-group>
+        <md-card-content>
+            <div layout="row" layout-align="center"> 
+                     <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
+             </div>
+        </md-card-content>
+         <md-card-footer>
+
+          <h3 md-subheader>From the Album:</h3>
+          <span>
+                 {{albumTitle}}
+          </span>
+        </md-card-footer>
+      </md-card>
+    </a>
+  `
 })
 export class AudioArtistPreviewComponent {
   @Input() audioArtist: AudioArtistInput;
@@ -74,27 +88,19 @@ export class AudioArtistPreviewComponent {
     return this.audioArtist.id;
   }
 
-  get name() {
-    return this.audioArtist.artist.name;
+  get artists() {
+    return this.audioArtist.artists;
   }
 
-/*  get subtitle() {
-    return this.book.volumeInfo.subtitle;
+  get albumTitle () {
+    return this.audioArtist.album.name;
   }
 
-  get description() {
-    return this.book.volumeInfo.description;
-  }
-
-  get authors() {
-    return this.book.volumeInfo.authors;
-  }
-
-  get thumbnail(): string | boolean {
-    if (this.book.volumeInfo.imageLinks) {
-      return this.book.volumeInfo.imageLinks.smallThumbnail;
+  get thumbnail():string | boolean {
+    if (this.audioArtist.album.images.length >0) {
+      return this.audioArtist.album.images[1].url;
     }
 
     return false;
-  }*/
+  }
 }

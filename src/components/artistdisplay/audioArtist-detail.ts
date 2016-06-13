@@ -52,13 +52,17 @@ export type RemoveOutput = AudioArtist;
     }
     md-card {
       max-width: 600px;
+      margin: 15px;
+      background-color:#5f84a5;
     }
     md-card-title {
       margin-left: 10px;
     }
     img {
       width: 300px;
+      height:220px;
       min-width: 300px;
+      min-height:220px;
       margin-left: 5px;
     }
     md-card-content {
@@ -87,13 +91,13 @@ export class AudioArtistDetailComponent {
   @Output() remove = new EventEmitter<RemoveOutput>();
 
   get id() {
-    return this.audioArtist.id;
+    return this.audioArtist.album.id;
   }
-
+/*
   get artistName() {
     return this.audioArtist.artist.name;
   }
-
+*/
   get albumName() {
     return this.audioArtist.album.name;
   }
@@ -111,6 +115,6 @@ export class AudioArtistDetailComponent {
   }
 */
   get thumbnail() {
-    return this.audioArtist.album.images.length===3?this.audioArtist.album.images[2]: '' ;
+    return this.audioArtist.album.images.length===3?this.audioArtist.album.images[2].url: '' ;
   }
 }

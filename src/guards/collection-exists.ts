@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Guard, TraversalCandidate, Router } from '@ngrx/router';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState, getAudioArtistCollection, getCollectionLoaded } from '../reducers';
+import { AppState, getAlbumCollection, getCollectionLoaded } from '../reducers';
 
 
 /**
@@ -30,16 +30,17 @@ export class CollectionExistGuard implements Guard {
    * has finished.
    */
   waitForCollectionToLoad() {
+    console.log('colleciton-exists.ts === waitForCollectionToLoad');
     return this.store.let(getCollectionLoaded())
       .filter(loaded => loaded)
       .take(1);
   }
 
 
-   checkForAudioArtistCollection(){
-    return this.store.let(getAudioArtistCollection())
+   checkForAlblumCollection(){
+    return this.store.let(getAlbumCollection())
       .switchMap(inStore => {
-              // console.log('[CollectionExistGuard] -checkForAudioArtistCollection= inStore',inStore.length);
+               console.log('[CollectionExistGuard] -checkForAudioArtistCollection= inStore',inStore.length);
               return (inStore && inStore.length>0)? Observable.of(true): Observable.of(false)
         });
    }
@@ -57,14 +58,21 @@ export class CollectionExistGuard implements Guard {
    * on to the next candidate route. In this case, it will move on
    * to the 404 page.
    */
-  protectRoute({ routeParams: { id } }: TraversalCandidate) {
+  protectRoute(canidate: TraversalCandidate) {
+    console.log('colleciton-exists.ts === TraversalCandidate');
     return this.waitForCollectionToLoad()
-      .switchMapTo(this.checkForAudioArtistCollection())
-          .map((audioArtistPresent) => {
-               if(!audioArtistPresent){
+      .switchMapTo(this.checkForAlblumCollection())
+          .map((albumPresent) => {
+               if(!albumPresent &&
+                   (canidate.locationChange.path ==='/' ||
+                   canidate.locationChange.path ==='') ){
+                   console.log('colleciton-exists.ts === canidate ', canidate)
+                   console.log('colleciton-exists.ts ===  this._router ',  this._router)
                   this._router.go('/audioArtist/find')
+                  return albumPresent;
                }
-               return audioArtistPresent;
+                   console.log('colleciton-exists.ts === canidate')
+               return albumPresent;
           });
   }
 }

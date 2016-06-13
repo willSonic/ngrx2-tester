@@ -3,8 +3,8 @@ import 'rxjs/add/operator/map';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AudioArtistActions } from '../actions';
-import { AudioArtist } from '../models';
+import { AlbumActions } from '../actions';
+import { Album } from '../models';
 
 
 export interface CollectionState {
@@ -21,41 +21,41 @@ const initialState: CollectionState = {
 
 export default function(state = initialState, action: Action): CollectionState {
   switch (action.type) {
-    case AudioArtistActions.LOAD_COLLECTION: {
+    case AlbumActions.LOAD_COLLECTION: {
       return Object.assign({}, state, {
         loading: true
       });
     }
 
-    case AudioArtistActions.LOAD_COLLECTION_SUCCESS: {
-      const audioArtists: AudioArtist[] = action.payload;
+    case AlbumActions.LOAD_COLLECTION_SUCCESS: {
+      const album: Album[] = action.payload;
 
       return {
         loaded: true,
         loading: false,
-        ids: audioArtists.map(audioArtist => audioArtist.id)
+        ids: album.map(album => album.id)
       };
     }
 
-    case AudioArtistActions.ADD_TO_COLLECTION_SUCCESS:
-    case AudioArtistActions.REMOVE_FROM_COLLECTION_FAIL: {
-      const audioArtist: AudioArtist = action.payload;
+    case AlbumActions.ADD_TO_COLLECTION_SUCCESS:
+    case AlbumActions.REMOVE_FROM_COLLECTION_FAIL: {
+      const album: Album = action.payload;
 
-      if (state.ids.includes(audioArtist.id)) {
+      if (state.ids.includes(album.id)) {
         return state;
       }
 
       return Object.assign({}, state, {
-        ids: [ ...state.ids, audioArtist.id ]
+        ids: [ ...state.ids, album.id ]
       });
     }
 
-    case AudioArtistActions.REMOVE_FROM_COLLECTION_SUCCESS:
-    case AudioArtistActions.ADD_TO_COLLECTION_FAIL: {
-      const audioArtist: AudioArtist = action.payload;
+    case AlbumActions.REMOVE_FROM_COLLECTION_SUCCESS:
+    case AlbumActions.ADD_TO_COLLECTION_FAIL: {
+      const album: Album = action.payload;
 
       return Object.assign({}, state, {
-        ids: state.ids.filter(id => id !== audioArtist.id)
+        ids: state.ids.filter(id => id !== album.id)
       });
     }
 
@@ -76,13 +76,13 @@ export function getLoading() {
     .select(s => s.loading);
 }
 
-export function getAudioArtistIds() {
+export function getAlbumsIds() {
   return (state$: Observable<CollectionState>) => state$
     .select(s => s.ids);
 }
 
-export function isAudioArtistInCollection(id: string) {
+export function isAlbumInCollection(id: string) {
   return (state$: Observable<CollectionState>) => state$
-    .let(getAudioArtistIds())
+    .let(getAlbumsIds())
     .map(ids => ids.includes(id));
 }

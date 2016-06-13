@@ -15,7 +15,7 @@ interface Artist{
     uri: string;
 }
 
-interface Album{
+export interface Album{
     album_type:string;
     available_markets :string[];
     id: string;
@@ -32,7 +32,7 @@ interface Album{
 
 export interface AudioArtist {
     album:Album;
-    artist:Artist;
+    artists:Artist[];
     available_markets :string[];
     disc_number: number;
     duration_ms: number;

@@ -19,10 +19,10 @@ const initialState: AudioArtistState = {
 
 
 export default function(state = initialState, action: Action): AudioArtistState {
+             //  console.log("[audioArtistsReducer.js]=---- AudioARsit STATE=");
     switch (action.type) {
 
         case AudioArtistActions.SEARCH_COMPLETE:
-        case AudioArtistActions.ARTIST_REQUEST_COMPLETE:
         case AudioArtistActions.LOAD_COLLECTION_SUCCESS: {
                console.log("[audioArtistsReducer.js]=---- type= "+action.type);
                 const audioArtists: AudioArtist[] = action.payload;
@@ -41,9 +41,6 @@ export default function(state = initialState, action: Action): AudioArtistState 
                     entities: Object.assign({}, state.entities, newArtistsEntities)
                 };
             }
-        case AudioArtistActions.REQUEST_ARTISTS: {
-            return state;
-        }
         case AudioArtistActions.LOAD_AUDIOARTIST: {
           const audioArtist: AudioArtist = action.payload;
 
@@ -86,42 +83,3 @@ export function hasAudioArtist(id: string) {
     .select(s => s.ids.includes(id));
 }
 
-
-/*
-iimport {Reducer, Action} from "@ngrx/store";
-
-
-export const REQUEST_ARTISTS  = 'REQUEST_ARTISTS';
-export const RECEIVED_ARTISTS = 'RECEIVED_ARTISTS';
-export const RECEIVED_ERROR   = 'RECEIVED_ERROR';
-
-
-export interface IArtist {
-    id: number;
-    audioArtistName: string;
-    trackTitle: string;
-    albumImgSrc: string;
-    trackURL:string;
-}
-
-export const audioArtists: Reducer<{}> = (state: any = {}, action: Action) => {
-    switch (action.type) {
-        case REQUEST_ARTISTS:
-             return state;
-        case RECEIVED_ARTISTS:
-            return Object.assign({},
-                state,
-                action.payload.reduce((obj, audioArtist) => {
-                    //console.log("audioArtists - -", audioArtist);
-                    obj[audioArtist.id] = audioArtist;
-                    return obj;
-                }, {})
-            );
-
-        case RECEIVED_ERROR:
-            return state;
-        default:
-            return state;
-    }
-};
-*/

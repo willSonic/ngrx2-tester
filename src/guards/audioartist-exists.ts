@@ -34,6 +34,7 @@ export class AudioArtistExistsGuard implements Guard {
    * has finished.
    */
   waitForCollectionToLoad() {
+    console.log('[AudioArtistExistsGuard] ----  waitForCollectionToLoad');
     return this.store.let(getCollectionLoaded())
       .filter(loaded => loaded)
       .take(1);
@@ -44,6 +45,7 @@ export class AudioArtistExistsGuard implements Guard {
    * in the Store
    */
   hasAudioArtistInStore(id: string) {
+    console.log('[AudioArtistExistsGuard] ----  hasAudioArtistInStore === id '+id);
     return this.store.let(hasAudioArtist(id)).take(1);
   }
 
@@ -52,7 +54,7 @@ export class AudioArtistExistsGuard implements Guard {
    * it in the store, returning `true` or `false` if it was found.
    */
   hasAudioArtistInApi(id: string) {
-    console.log('[AudioArtistExistsGuard] ----  hasAudioArtistInApi ===');
+    console.log('[AudioArtistExistsGuard] ----  hasAudioArtistInApi === id '+id);
     return this.spotifyArtists.retrieveAudioArtist(id)
       .map(audioArtist => this.audioArtistActions.loadAudioArtist(audioArtist))
       .do(action => this.store.dispatch(action))
@@ -66,6 +68,7 @@ export class AudioArtistExistsGuard implements Guard {
    * API.
    */
   hasAudioArtist(id: string) {
+  console.log('[AudioArtistExistsGuard] ----  hasAudioArtist === id ='+ id);
     return this.hasAudioArtistInStore(id)
       .switchMap(inStore => {
         if (inStore) {
@@ -89,14 +92,8 @@ export class AudioArtistExistsGuard implements Guard {
    * to the 404 page.
    */
   protectRoute({ routeParams: { id } }: TraversalCandidate) {
+     console.log('[AudioArtistExistsGuard] ----  protectRoute === routeParams ='+ id);
     return this.waitForCollectionToLoad()
-      .switchMapTo(this.hasAudioArtist(id))
-          .map((audioArtistPresent) => {
-               if(!audioArtistPresent){
-                  console.log('[AudioArtistExistsGuard] ----  protectRoute === REDIRECT');
-                  this._router.go('/audioArtist/find')
-               }
-               return audioArtistPresent;
-          });
+      .switchMapTo(this.hasAudioArtist(id));
   }
 }

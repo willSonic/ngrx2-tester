@@ -15,15 +15,17 @@ import { Database } from '@ngrx/db';
 import { AppState } from '../reducers';
 import { SpotifyService } from '../services/SpotifyService';
 import { AudioArtistActions } from '../actions/audioArtistsAction';
-import { AudioArtist } from '../models';
+import { AudioArtist, Album } from '../models';
+import {AlbumActions} from "../actions/albumsAction";
 
 
 @Injectable()
 export class AudioArtistEffects {
   constructor(
     private updates$: StateUpdates<AppState>,
-    private spotifyArists: SpotifyService,
+    private spotifyArtists: SpotifyService,
     private db: Database,
+    private albumActions: AlbumActions,
     private audioArtistActions: AudioArtistActions
   ) { }
 
@@ -40,53 +42,71 @@ export class AudioArtistEffects {
  * Official Docs: http://reactivex.io/rxjs/manual/overview.html#categories-of-operators
  * RxJS 5 Operators By Example: https://gist.github.com/btroncone/d6cf141d6f2c00dc6b35
  */
-  @Effect() openDB$ = this.db.open('audioartists_app').filter(() => false);
+  @Effect() openDB$ = this.db.open('albums_app').filter(() => false);
 
 
-  @Effect() loadCollectionOnInit$ = Observable.of(this.audioArtistActions.loadCollection());
+  @Effect() loadCollectionOnInit$ = Observable.of(this.albumActions.loadCollection());
 
 
   @Effect() loadCollection$ = this.updates$
-    .whenAction(AudioArtistActions.LOAD_COLLECTION)
-    .switchMapTo(this.db.query('audioartists').toArray())
-    .map((audioArtists: AudioArtist[]) => this.audioArtistActions.loadCollectionSuccess(audioArtists));
+    .whenAction(AlbumActions.LOAD_COLLECTION)
+    .switchMapTo(this.db.query('albums').toArray())
+    .map((albums: Album[]) => this.albumActions.loadCollectionSuccess(albums));
 
 
   @Effect() search$ = this.updates$
+    .whenAction(AlbumActions.SEARCH_ALBUM)
+    .map<string>(toPayload)
+    .filter(query => query !== '')
+    .switchMap(query => this.spotifyArtists.searchAudioArtist(query)
+      .map(audioArtists => this.albumActions.searchAlbum(audioArtists))
+      .catch(() => Observable.of(this.albumActions.searchAlbumComplete([])))
+    );
+
+  @Effect() clearSearch$ = this.updates$
+    .whenAction(AlbumActions.SEARCH_ALBUM)
+    .map<string>(toPayload)
+    .filter(query => query === '')
+    .mapTo(this.albumActions.searchAlbumComplete([]));
+
+
+
+  @Effect() audioArtistSearch$ = this.updates$
     .whenAction(AudioArtistActions.SEARCH)
     .map<string>(toPayload)
     .filter(query => query !== '')
-    .switchMap(query => this.spotifyArists.searchAudioArtist(query)
+    .switchMap(query => this.spotifyArtists.searchAudioArtist(query)
       .map(audioArtists => this.audioArtistActions.searchComplete(audioArtists))
       .catch(() => Observable.of(this.audioArtistActions.searchComplete([])))
     );
 
 
-  @Effect() clearSearch$ = this.updates$
+  @Effect() clearAudioArtistSearch$ = this.updates$
     .whenAction(AudioArtistActions.SEARCH)
     .map<string>(toPayload)
     .filter(query => query === '')
     .mapTo(this.audioArtistActions.searchComplete([]));
 
 
-  @Effect() addAudioArtistToCollection$ = this.updates$
-    .whenAction(AudioArtistActions.ADD_TO_COLLECTION)
-    .map<AudioArtist>(toPayload)
-    .mergeMap(audioArtist => this.db.insert('audioartists', [ audioArtist ])
-      .mapTo(this.audioArtistActions.addToCollectionSuccess(audioArtist))
+
+  @Effect() addAlbumToCollection$ = this.updates$
+    .whenAction(AlbumActions.ADD_TO_COLLECTION)
+    .map<Album>(toPayload)
+    .mergeMap(album => this.db.insert('albums', [ album ])
+      .mapTo(this.albumActions.addToCollectionSuccess(album))
       .catch(() => Observable.of(
-        this.audioArtistActions.removeFromCollectionFail(audioArtist)
+        this.albumActions.addToCollectionFail(album)
       ))
     );
 
 
-  @Effect() removeAudioArtistFromCollection$ = this.updates$
-    .whenAction(AudioArtistActions.REMOVE_FROM_COLLECTION)
-    .map<AudioArtist>(toPayload)
-    .mergeMap(audioArtist => this.db.executeWrite('audioartists', 'delete', [ audioArtist.id ])
-      .mapTo(this.audioArtistActions.removeFromCollectionSuccess(audioArtist))
+  @Effect() removeAlbumFromCollection$ = this.updates$
+    .whenAction(AlbumActions.REMOVE_FROM_COLLECTION)
+    .map<Album>(toPayload)
+    .mergeMap(album => this.db.executeWrite('albums', 'delete', [ album.id ])
+      .mapTo(this.albumActions.removeFromCollectionSuccess(album))
       .catch(() => Observable.of(
-        this.audioArtistActions.removeFromCollectionFail(audioArtist)
+        this.albumActions.removeFromCollectionFail(album)
       ))
     );
 }
