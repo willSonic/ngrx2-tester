@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { AudioArtistPreviewComponent, AudioArtistInput } from './audioArtist-preview';
+import { AudioArtistPreviewComponent, AudioArtistInput, AlbumInput } from './audioArtist-preview';
 
 export type AudioArtistsInput = AudioArtistInput[];
+export type AlbumInput =AlbumInput[];
 
 @Component({
   selector: 'audioartist-preview-list',

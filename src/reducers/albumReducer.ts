@@ -72,10 +72,10 @@ export function getAlbum(id: string) {
     .select(s => s.entities[id]);
 };
 
-export function getAlbums(audioArtistIds: string[]) {
+export function getAlbums(albumIds: string[]) {
     return (state$: Observable<AlbumState>) => state$
         .let(getAlbumEntities())
-        .map(entities => audioArtistIds.map(id => entities[id]));
+        .map(entities => albumIds.map(id => entities[id]));
 }
 
 export function hasAlbum(id: string) {

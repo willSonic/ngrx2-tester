@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { AudioArtist } from '../../models';
+import { AudioArtist, Album } from '../../models';
 import { AddCommasPipe } from '../../pipes/add-commas';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
@@ -11,6 +11,7 @@ import { MdButton } from '@angular2-material/button';
  * get better tooling for templates, this helps enforce you are using a
  * component's API with type safety.
  */
+export type AlbumInput = Album;
 export type AudioArtistInput = AudioArtist;
 export type InCollectionInput = boolean;
 export type AddOutput = AudioArtist;

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { AppState, getAlbumCollection } from '../reducers';
-import { AudioArtistPreviewListComponent, AudioArtistsInput } from '../components/artistdisplay/audioArtist-preview-list';
+import { AudioArtistPreviewListComponent, AlbumInput } from '../components/artistdisplay/audioArtist-preview-list';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 
 
@@ -26,7 +26,7 @@ import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
   `]
 })
 export class CollectionPage {
-  audioArtists$: Observable<AudioArtistsInput>;
+  audioArtists$: Observable<AlbumInput>;
 
   constructor(store: Store<AppState>) {
     this.audioArtists$ = store.let(getAlbumCollection());

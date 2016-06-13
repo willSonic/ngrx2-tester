@@ -59,7 +59,7 @@ export class AudioArtistEffects {
     .map<string>(toPayload)
     .filter(query => query !== '')
     .switchMap(query => this.spotifyArtists.searchAudioArtist(query)
-      .map(audioArtists => this.albumActions.searchAlbum(audioArtists))
+      .map(audioArtists => this.albumActions.searchAlbumComplete(audioArtists))
       .catch(() => Observable.of(this.albumActions.searchAlbumComplete([])))
     );
 

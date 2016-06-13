@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { AudioArtist } from '../../models';
+import { AudioArtist, Album } from '../../models';
 import { AddCommasPipe } from '../../pipes/add-commas';
 import { EllipsisPipe } from '../../pipes/ellipsis';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
@@ -8,6 +8,7 @@ import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 
 export type AudioArtistInput = AudioArtist;
+export type AlbumInput =Album;
 
 @Component({
   selector: 'audioartist-preview',
