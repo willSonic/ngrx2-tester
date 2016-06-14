@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { SpotifyService } from '../services/SpotifyService';
 import { AppState, hasAlbum,  getCollectionLoaded } from '../reducers';
 import { AlbumActions } from '../actions/albumsAction';
+import { AudioArtistActions } from '../actions/audioArtistsAction';
 
 
 /**
@@ -25,6 +26,7 @@ export class AudioArtistExistsGuard implements Guard {
     private store: Store<AppState>,
     private spotifyArtists: SpotifyService,
     private albumActions: AlbumActions,
+    private audioArtistActions: AudioArtistActions,
     private _router: Router
   ) { }
 
@@ -56,7 +58,7 @@ export class AudioArtistExistsGuard implements Guard {
   hasAlbumInApi(id: string) {
     console.log('[AudioArtistExistsGuard] ----  hasAlbumInApi === id '+id);
     return this.spotifyArtists.retrieveAlbum(id)
-      .map(album => this.albumActions.loadAlbum(album))
+      .map(audioArtists => this.audioArtistActions.searchComplete(audioArtists))
       .do(action => this.store.dispatch(action))
       .map(album => !!album)
       .catch(() => Observable.of(false));

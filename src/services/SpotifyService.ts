@@ -36,8 +36,9 @@ export class SpotifyService {
    }
 
    retrieveAlbum(id: string): Observable<Album> {
-     let queryURL: string =  `${SpotifyService.BASE_URL}`+'/albums/'+id+'/tracks?limit=2';
-     return this.http.request(queryURL).map((res: any) => res.json());
+        let queryURL: string =  `${SpotifyService.BASE_URL}`+'/albums/'+id+'/tracks?limit=2';
+       console.log("[SpotifyService]=---- retrieveAlbum -- queryURL ="+queryURL);
+       return this.http.request(queryURL).map((res: any) => res.json().items);
    }
    /*
     https://api.spotify.com/v1/albums/0WAuEfa5Lmg72xfydLVcca/tracks?limit=2

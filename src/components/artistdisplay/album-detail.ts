@@ -23,21 +23,19 @@ export type RemoveOutput = Album;
   template: `
     <md-card>
       <md-card-title-group>
-        <md-card-title>{{ artistName }}</md-card-title>
-       <!--  <md-card-subtitle *ngIf="subtitle">{{ genres | addCommas }}</md-card-subtitle>-->
+        <md-card-title>{{ albumName }}</md-card-title>
       </md-card-title-group>
       <md-card-content>
-        <div class="md-display-1"> {{albumName }} </div>
-        
-        <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/> 
+        <div layout="row" layout-align="center"> 
+           <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/> 
+        </div>
       </md-card-content>
       <md-card-actions align="end">
         <button md-raised-button color="warn" *ngIf="inCollection" (click)="remove.emit(audioArtist)">
-        Remove Audio Artist from Collection
+           Remove Audio Artist from Collection
         </button>
-
         <button md-raised-button color="primary" *ngIf="!inCollection" (click)="add.emit(audioArtist)">
-         Add Audio Artist to Collection
+           Add Audio Artist to Collection
         </button>
       </md-card-actions>
     </md-card>
@@ -56,6 +54,7 @@ export type RemoveOutput = Album;
     }
     md-card-title {
       margin-left: 10px;
+       color: #EBEBEB;
     }
     img {
       width: 300px;
