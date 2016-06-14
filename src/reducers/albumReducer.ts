@@ -24,12 +24,12 @@ export default function(state = initialState, action: Action): AlbumState {
         case AlbumActions.SEARCH_COMPLETE_FROM_AUDIOARTIST:{
                console.log("[albumReducer.js]=---- action.payload= "+action.payload);
                 const albums: Album[] = action.payload.map(audioArtist =>audioArtist.album);
-                const newAlbums = albums.filter(album => !state.entities[album.id]);
+                const newAlbums = albums.filter(album => !state.entities[album.trackId]);
 
-                const newAlbumsIds = newAlbums.map(album => album.id);
-                const newAlbumsEntities = newAlbums.reduce((entities: { [id: string]: Album }, album: Album) => {
+                const newAlbumsIds = newAlbums.map(album => album.trackId);
+                const newAlbumsEntities = newAlbums.reduce((entities: { [trackId: string]: Album }, album: Album) => {
                     return Object.assign(entities, {
-                        [album.id]: album
+                        [album.trackId]: album
                     });
                 }, {});
 
@@ -43,12 +43,12 @@ export default function(state = initialState, action: Action): AlbumState {
         case AlbumActions.LOAD_COLLECTION_SUCCESS: {
                console.log("[albumReducer.js]=---- type= "+action.type);
                 const albums: Album[] = action.payload;
-                const newAlbums = albums.filter(album => !state.entities[album.id]);
+                const newAlbums = albums.filter(album => !state.entities[album.trackId]);
 
                 const newAlbumsIds = newAlbums.map(album => album.id);
-                const newAlbumsEntities = newAlbums.reduce((entities: { [id: string]: Album }, album: Album) => {
+                const newAlbumsEntities = newAlbums.reduce((entities: { [trackId: string]: Album }, album: Album) => {
                     return Object.assign(entities, {
-                        [album.id]: album
+                        [album.trackId]: album
                     });
                 }, {});
 
@@ -61,14 +61,14 @@ export default function(state = initialState, action: Action): AlbumState {
         case AlbumActions.LOAD_ALBUM: {
           const album: Album = action.payload;
 
-          if (state.ids.includes(album.id)) {
+          if (state.ids.includes(album.trackId)) {
             return state;
           }
 
           return {
-            ids: [ ...state.ids, album.id ],
+            ids: [ ...state.ids, album.trackId ],
             entities: Object.assign({}, state.entities, {
-              [album.id]: album
+              [album.trackId]: album
             })
           };
         }

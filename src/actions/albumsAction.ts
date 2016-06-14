@@ -16,7 +16,7 @@ export class AlbumActions {
       static SEARCH_COMPLETE_ALBUM = '[Album] Search Complete';
       searchAlbumComplete(results: Album[]): Action {
 
-         console.log("[AlbumActions]=---- SEARCH_COMPLETE_ALBUM --results",results);
+         console.log("/n [AlbumActions]=--SEARCH_COMPLETE_ALBUM --results",results);
         return {
           type: AlbumActions.SEARCH_COMPLETE_ALBUM,
           payload: results

@@ -58,7 +58,7 @@ export class AudioArtistExistsGuard implements Guard {
   hasAlbumInApi(id: string) {
     console.log('[AudioArtistExistsGuard] ----  hasAlbumInApi === id '+id);
     return this.spotifyArtists.retrieveAlbum(id)
-      .map(audioArtists => this.audioArtistActions.searchComplete(audioArtists))
+      .map(album => this.albumActions.loadAlbum(album))
       .do(action => this.store.dispatch(action))
       .map(album => !!album)
       .catch(() => Observable.of(false));

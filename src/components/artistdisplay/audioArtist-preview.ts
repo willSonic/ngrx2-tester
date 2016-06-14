@@ -86,7 +86,7 @@ export class AudioArtistPreviewComponent {
   @Input() audioArtist: AudioArtistInput;
 
   get id() {
-    return this.audioArtist.album.id;
+    return this.audioArtist.id;
   }
 
   get artists() {

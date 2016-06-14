@@ -23,6 +23,7 @@ export interface Album{
     external_urls:{
         spotify:string
     };
+    trackId:string;
     genres:string[];
     images: Image[];
     name:string;

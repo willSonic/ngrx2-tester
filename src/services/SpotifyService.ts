@@ -19,8 +19,13 @@ export class SpotifyService {
      if (params) {
          queryURL = `${queryURL}?${params.join('&')}`;
      }
-    console.log("[SpotifyService]=---- query -- queryURL ="+queryURL);
-    return this.http.request(queryURL).map((res: any) => res.json().tracks.items);
+    return this.http.request(queryURL).map((res: any) => {
+        const jsonRtrn = res.json().tracks.items;
+        jsonRtrn.forEach(function(item){
+                item.album = Object.assign({}, item.album, {trackId:item.id})
+        })
+        return jsonRtrn
+    });
   }
 
   search(query: string, type: string): Observable<AudioArtist[]> {
@@ -36,9 +41,13 @@ export class SpotifyService {
    }
 
    retrieveAlbum(id: string): Observable<Album> {
-        let queryURL: string =  `${SpotifyService.BASE_URL}`+'/albums/'+id+'/tracks?limit=2';
+        let queryURL: string =  `${SpotifyService.BASE_URL}`+'/tracks/'+id;
        console.log("[SpotifyService]=---- retrieveAlbum -- queryURL ="+queryURL);
-       return this.http.request(queryURL).map((res: any) => res.json().items);
+       return this.http.request(queryURL).map((res: any) =>{
+             const jsonRtrn = res.json();
+              jsonRtrn.album = Object.assign({},res.json().album, {trackId:res.json().id})
+              return jsonRtrn.album;
+           });
    }
    /*
     https://api.spotify.com/v1/albums/0WAuEfa5Lmg72xfydLVcca/tracks?limit=2
