@@ -31,10 +31,10 @@ export type RemoveOutput = Album;
         </div>
       </md-card-content>
       <md-card-actions align="end">
-        <button md-raised-button color="warn" *ngIf="inCollection" (click)="remove.emit(audioArtist)">
+        <button md-raised-button color="warn" *ngIf="inCollection" (click)="remove.emit(album)">
            Remove Audio Artist from Collection
         </button>
-        <button md-raised-button color="primary" *ngIf="!inCollection" (click)="add.emit(audioArtist)">
+        <button md-raised-button color="primary" *ngIf="!inCollection" (click)="add.emit(album)">
            Add Audio Artist to Collection
         </button>
       </md-card-actions>

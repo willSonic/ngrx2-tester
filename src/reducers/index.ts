@@ -212,7 +212,7 @@ export function getCollectionLoading() {
 }
 
 export function getCollectionAlbumIds() {
-  return compose(fromCollection.getAlbumsIds(), getCollectionState());
+  return compose(fromCollection.getAlbumsTrackIds(), getCollectionState());
 }
 
 export function isAlbumInCollection(id: string) {

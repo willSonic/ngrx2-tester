@@ -10,7 +10,7 @@ const schema: DBSchema = {
   stores: {
     albums: {
       autoIncrement: true,
-      primaryKey: 'id'
+      primaryKey: 'trackId'
     }
   }
 };

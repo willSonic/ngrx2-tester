@@ -10,13 +10,13 @@ import { Album } from '../models';
 export interface CollectionState {
   loaded: boolean;
   loading: boolean;
-  ids: string[];
+  trackIds: string[];
 };
 
 const initialState: CollectionState = {
   loaded: false,
   loading: false,
-  ids: []
+  trackIds: []
 };
 
 export default function(state = initialState, action: Action): CollectionState {
@@ -33,7 +33,7 @@ export default function(state = initialState, action: Action): CollectionState {
       return {
         loaded: true,
         loading: false,
-        ids: album.map(album => album.id)
+        trackIds: album.map(album => album.trackId)
       };
     }
 
@@ -41,12 +41,12 @@ export default function(state = initialState, action: Action): CollectionState {
     case AlbumActions.REMOVE_FROM_COLLECTION_FAIL: {
       const album: Album = action.payload;
 
-      if (state.ids.includes(album.id)) {
+      if (state.trackIds.includes(album.trackId)) {
         return state;
       }
 
       return Object.assign({}, state, {
-        ids: [ ...state.ids, album.id ]
+        ids: [ ...state.trackIds, album.trackId ]
       });
     }
 
@@ -55,7 +55,7 @@ export default function(state = initialState, action: Action): CollectionState {
       const album: Album = action.payload;
 
       return Object.assign({}, state, {
-        ids: state.ids.filter(id => id !== album.id)
+        ids: state.trackIds.filter(trackId => trackId !== album.trackId)
       });
     }
 
@@ -76,13 +76,13 @@ export function getLoading() {
     .select(s => s.loading);
 }
 
-export function getAlbumsIds() {
+export function getAlbumsTrackIds() {
   return (state$: Observable<CollectionState>) => state$
-    .select(s => s.ids);
+    .select(s => s.trackIds);
 }
 
-export function isAlbumInCollection(id: string) {
+export function isAlbumInCollection(trackId: string) {
   return (state$: Observable<CollectionState>) => state$
-    .let(getAlbumsIds())
-    .map(ids => ids.includes(id));
+    .let(getAlbumsTrackIds())
+    .map(trackIds => trackIds.includes(trackId));
 }

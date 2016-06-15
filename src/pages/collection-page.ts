@@ -4,19 +4,19 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { AppState, getAlbumCollection } from '../reducers';
-import { AudioArtistPreviewListComponent, AlbumInput } from '../components/artistdisplay/audioArtist-preview-list';
+import { AlbumCollectionListComponent, AlbumInput } from '../components/artistdisplay/album-collection-list';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 
 
 @Component({
   selector: 'collection-page',
-  directives: [ AudioArtistPreviewListComponent, MD_CARD_DIRECTIVES ],
+  directives: [ AlbumCollectionListComponent, MD_CARD_DIRECTIVES ],
   template: `
     <md-card>
       <md-card-title>My Collection</md-card-title>
     </md-card>
 
-    <audioartist-preview-list [audioArtists]="audioArtists$ | async"></audioartist-preview-list>
+    <album-collection-list [albums]="albums$ | async"></album-collection-list>
   `,
   styles: [`
     md-card-title {
@@ -26,9 +26,9 @@ import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
   `]
 })
 export class CollectionPage {
-  audioArtists$: Observable<AlbumInput>;
+  albums$: Observable<AlbumInput>;
 
   constructor(store: Store<AppState>) {
-    this.audioArtists$ = store.let(getAlbumCollection());
+    this.albums$ = store.let(getAlbumCollection());
   }
 }

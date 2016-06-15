@@ -84,19 +84,19 @@ export function getAlbumEntities() {
         .select(s => s.entities);
 };
 
-export function getAlbum(id: string) {
+export function getAlbum(trackId: string) {
   return (state$: Observable<AlbumState>) => state$
-    .select(s => s.entities[id]);
+    .select(s => s.entities[trackId]);
 };
 
 export function getAlbums(albumIds: string[]) {
     return (state$: Observable<AlbumState>) => state$
         .let(getAlbumEntities())
-        .map(entities => albumIds.map(id => entities[id]));
+        .map(entities => albumIds.map(trackId => entities[trackId]));
 }
 
-export function hasAlbum(id: string) {
+export function hasAlbum(trackId: string) {
   return (state$: Observable<AlbumState>) => state$
-    .select(s => s.ids.includes(id));
+    .select(s => s.ids.includes(trackId));
 }
 
