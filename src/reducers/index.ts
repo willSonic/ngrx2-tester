@@ -149,13 +149,13 @@ export default compose(storeLogger(), combineReducers)({
    return compose(fromAlbums.getAlbumEntities(), geAlbumsState());
  }
 
- export function getAlbum(id: string) {
-    console.log('[index.ts reducers] --getAlbum id'+id);
-   return compose(fromAlbums.getAlbum(id), geAlbumsState());
+ export function getAlbum(trackId: string) {
+    console.log('[index.ts reducers] --getAlbum trackId'+trackId);
+   return compose(fromAlbums.getAlbum(trackId), geAlbumsState());
  }
 
- export function hasAlbum(id: string) {
-   return compose(fromAlbums.hasAlbum(id), geAlbumsState());
+ export function hasAlbum(trackId: string) {
+   return compose(fromAlbums.hasAlbum(trackId), geAlbumsState());
  }
 
  export function getAlbums(albumIds: string[]) {
@@ -190,7 +190,6 @@ export function getSearchQuery() {
  * composes the search result IDs to return an array of books in the store.
  */
 export function getSearchResults() {
-  console.log('Do getSearchResults Querry for Arist')
   return (state$: Observable<AppState>) => state$
     .let(getSearchAudioArtistIds())
     .switchMap(audioArtistIds => state$.let(getAudioArtists(audioArtistIds)));
@@ -220,9 +219,9 @@ export function isAlbumInCollection(id: string) {
 }
 
 export function getAlbumCollection() {
-  console.log('Do getAlbumCollection Querry for Album')
-
   return (state$: Observable<AppState>) => state$
     .let(getCollectionAlbumIds())
-    .switchMap(albumIds => state$.let(getAlbums(albumIds)));
+    .switchMap(albumIds => {
+         return state$.let(getAlbums(albumIds))
+    } );
 }

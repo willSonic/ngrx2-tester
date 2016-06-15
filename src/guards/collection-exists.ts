@@ -37,12 +37,29 @@ export class CollectionExistGuard implements Guard {
   }
 
 
-   checkForAlblumCollection(){
-    return this.store.let(getAlbumCollection())
-      .switchMap(inStore => {
-               console.log('[CollectionExistGuard] -checkForAudioArtistCollection= inStore',inStore.length);
-              return (inStore && inStore.length>0)? Observable.of(true): Observable.of(false)
-        });
+   hasAlbumCollection(){
+       return this.store.let(getAlbumCollection()).take(1);
+   }
+
+   checkForAlblumCollection(canidate: TraversalCandidate){
+    return this.hasAlbumCollection()
+      .map(inStore =>  {
+                       if(inStore && inStore.length>0){
+                                     console.log("colleciton-exists.ts = inStore.length ="+inStore.length);
+                            return true;
+                       }else{
+                            if((canidate.locationChange.path ==='/' ||
+                                canidate.locationChange.path ==='') ){
+                                     console.log('colleciton-exists.ts = checkForAlblumCollection = canidate ', canidate)
+                                     console.log('colleciton-exists.ts = checkForAlblumCollection =  this._router ',  this._router)
+                                     this._router.go('/audioArtist/find')
+                             }
+                            return false;
+                       }
+                     });
+           //    console.log('[CollectionExistGuard] -checkForAudioArtistCollection= inStore',inStore.length);
+            //  return (inStore && inStore.length>0)? Observable.of(true): Observable.of(false)
+         //});
    }
 
   /**
@@ -60,19 +77,7 @@ export class CollectionExistGuard implements Guard {
    */
   protectRoute(canidate: TraversalCandidate) {
     console.log('colleciton-exists.ts === TraversalCandidate');
-    return this.waitForCollectionToLoad()
-      .switchMapTo(this.checkForAlblumCollection())
-          .map((albumPresent) => {
-               if(!albumPresent &&
-                   (canidate.locationChange.path ==='/' ||
-                   canidate.locationChange.path ==='') ){
-                   console.log('colleciton-exists.ts === canidate ', canidate)
-                   console.log('colleciton-exists.ts ===  this._router ',  this._router)
-                  this._router.go('/audioArtist/find')
-                  return albumPresent;
-               }
-                   console.log('colleciton-exists.ts === canidate')
-               return albumPresent;
-          });
+       return  this.waitForCollectionToLoad()
+               .switchMapTo(this.checkForAlblumCollection(canidate));
   }
 }

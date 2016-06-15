@@ -27,7 +27,7 @@ export type RemoveOutput = Album;
       </md-card-title-group>
       <md-card-content>
         <div layout="row" layout-align="center"> 
-           <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/> 
+         <img md-card-sm-image *ngIf="thumbnail" [src]="thumbnail"/> 
         </div>
       </md-card-content>
       <md-card-actions align="end">
@@ -93,6 +93,7 @@ export class AlbumDetailComponent {
   }
 
   get albumName() {
+    console.log("[AlbumDetailComponent] ===albumName ", this.album)
     return this.album.name;
   }
    /*

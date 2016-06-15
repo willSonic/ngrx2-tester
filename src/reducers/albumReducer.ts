@@ -8,12 +8,12 @@ import { AlbumActions } from '../actions';
 
 
 export interface  AlbumState {
-    ids: string[];
-    entities: { [id: string]: Album };
+    trackIds: string[];
+    entities: { [trackId: string]: Album };
 };
 
 const initialState: AlbumState = {
-    ids: [],
+    trackIds: [],
     entities: {}
 };
 
@@ -35,7 +35,7 @@ export default function(state = initialState, action: Action): AlbumState {
 
                console.log("[albumReducer.js]=-AlbumAction.LOAD_COLLECTION_SUCCESS:--- newAlbumsEntities =", newAlbumsEntities);
                 return {
-                    ids: [ ...state.ids, ...newAlbumsIds ],
+                    trackIds: [ ...state.trackIds, ...newAlbumsIds ],
                     entities: Object.assign({}, state.entities, newAlbumsEntities)
                 };
             }
@@ -54,19 +54,19 @@ export default function(state = initialState, action: Action): AlbumState {
 
                console.log("[albumReducer.js]=-AlbumAction.LOAD_COLLECTION_SUCCESS:--- newAlbumsEntities =", newAlbumsEntities);
                 return {
-                    ids: [ ...state.ids, ...newAlbumsIds ],
+                    trackIds: [ ...state.trackIds, ...newAlbumsIds ],
                     entities: Object.assign({}, state.entities, newAlbumsEntities)
                 };
             }
         case AlbumActions.LOAD_ALBUM: {
           const album: Album = action.payload;
 
-          if (state.ids.includes(album.trackId)) {
+          if (state.trackIds.includes(album.trackId)) {
             return state;
           }
 
           return {
-            ids: [ ...state.ids, album.trackId ],
+            trackIds: [ ...state.trackIds, album.trackId ],
             entities: Object.assign({}, state.entities, {
               [album.trackId]: album
             })
@@ -92,11 +92,15 @@ export function getAlbum(trackId: string) {
 export function getAlbums(albumIds: string[]) {
     return (state$: Observable<AlbumState>) => state$
         .let(getAlbumEntities())
-        .map(entities => albumIds.map(trackId => entities[trackId]));
+        .map(entities => albumIds.map(trackId => {
+
+  console.log('[albumReducers] ---getAlbums  --- entities['+trackId+']', entities[trackId]);
+               return entities[trackId]
+        }));
 }
 
 export function hasAlbum(trackId: string) {
   return (state$: Observable<AlbumState>) => state$
-    .select(s => s.ids.includes(trackId));
+    .select(s => s.trackIds.includes(trackId));
 }
 

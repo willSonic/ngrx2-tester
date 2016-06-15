@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState, getAlbumCollection } from '../reducers';
-import { AlbumCollectionListComponent, AlbumInput } from '../components/artistdisplay/album-collection-list';
+import { AppState, getAlbumCollection} from '../reducers';
+import { AlbumCollectionListComponent, AlbumsInput } from '../components/artistdisplay/album-collection-list';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 
 
@@ -26,7 +26,7 @@ import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
   `]
 })
 export class CollectionPage {
-  albums$: Observable<AlbumInput>;
+  albums$: Observable<AlbumsInput>;
 
   constructor(store: Store<AppState>) {
     this.albums$ = store.let(getAlbumCollection());

@@ -8,7 +8,7 @@ export type AlbumsInput = AlbumInput[];
     selector: 'album-collection-list',
     directives: [ AlbumDetailComponent ],
     template: `
-    <audioartist-detail *ngFor="let album  of albums" [albums]="albums"></audioartist-detail>
+    <audioartist-detail *ngFor="let album  of albums" [album]="album"></audioartist-detail>
   `,
     styles: [`
     :host {

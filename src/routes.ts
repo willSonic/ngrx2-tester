@@ -6,9 +6,10 @@ import { AudioArtistExistsGuard, CollectionExistGuard  } from './guards';
 const routes: Routes = [
   {
     path: '/',
-    guards: [ CollectionExistGuard ],
+    guards:[ CollectionExistGuard ],
     loadComponent: () => new Promise(resolve => {
       (require as any).ensure([], require => {
+        console.log('Go To CollectionPage')
         resolve(require('./pages/collection-page').CollectionPage);
       });
     })
