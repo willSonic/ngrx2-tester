@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output,ChangeDetectionStrategy, EventEmitter } from '@angular/core';
 
 import {  Album } from '../../models';
 import { AddCommasPipe } from '../../pipes/add-commas';
@@ -31,7 +31,7 @@ export type RemoveOutput = Album;
         </div>
       </md-card-content>
       <md-card-actions align="end">
-        <button md-raised-button color="warn" *ngIf="inCollection" (click)="remove.emit(album)">
+        <button md-raised-button color="warn" *ngIf="inCollection" (click)="removeFromCollection.emit(album)">
            Remove Audio Artist from Collection
         </button>
         <button md-raised-button color="primary" *ngIf="!inCollection" (click)="add.emit(album)">
@@ -70,7 +70,8 @@ export type RemoveOutput = Album;
     md-card-footer {
       padding-bottom: 75px;
     }
-  `]
+  `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumDetailComponent {
   /**
@@ -85,8 +86,8 @@ export class AlbumDetailComponent {
    */
   @Input() album: AlbumInput;
   @Input() inCollection: InCollectionInput;
+  @Output() removeFromCollection: EventEmitter<Album> = new EventEmitter<Album>();
   @Output() add = new EventEmitter<AddOutput>();
-  @Output() remove = new EventEmitter<RemoveOutput>();
 
   get id() {
     return this.album.id;

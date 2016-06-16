@@ -116,7 +116,7 @@ export class AudioArtistEffects {
   @Effect() removeAlbumFromCollection$ = this.updates$
     .whenAction(AlbumActions.REMOVE_FROM_COLLECTION)
     .map<Album>(toPayload)
-    .mergeMap(album => this.db.executeWrite('albums', 'delete', [ album.id ])
+    .mergeMap(album => this.db.executeWrite('albums', 'delete', [ album.trackId ])
       .mapTo(this.albumActions.removeFromCollectionSuccess(album))
       .catch(() => Observable.of(
         this.albumActions.removeFromCollectionFail(album)

@@ -11,8 +11,7 @@ import {
   AlbumDetailComponent,
   AlbumInput,
   InCollectionInput,
-  AddOutput,
-  RemoveOutput
+  AddOutput
 } from '../components/artistdisplay/album-detail';
 
 
@@ -49,9 +48,5 @@ export class AudioArtistViewPage {
 
   addToCollection(album: AddOutput) {
     this.store.dispatch(this.albumActions.addToCollection(album));
-  }
-
-  removeFromCollection(album: RemoveOutput) {
-    this.store.dispatch(this.albumActions.removeFromCollection(album));
   }
 }

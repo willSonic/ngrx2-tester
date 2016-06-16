@@ -1,18 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,Output, EventEmitter  } from '@angular/core';
 
-import { AlbumDetailComponent, AlbumInput } from './album-detail';
+import {  Album } from '../../models';
+import { AlbumDetailComponent, AlbumInput, RemoveOutput } from './album-detail';
 
 export type AlbumsInput = AlbumInput[];
-
 @Component({
     selector: 'album-collection-list',
     directives: [ AlbumDetailComponent ],
     template: `
     <audioartist-detail 
-      [book]="book$ | async"
-      [inCollection]="isBookInCollection$ | async"
-      (add)="addToCollection($event)"
-      (remove)="removeFromCollection($event)" *ngFor="let album  of albums" [album]="album"></audioartist-detail>
+      [inCollection]="true"
+      (removeFromCollection)="removeFromCollection.emit($event)"
+       *ngFor="let album  of albums" [album]="album"></audioartist-detail>
   `,
     styles: [`
     :host {
@@ -24,5 +23,6 @@ export type AlbumsInput = AlbumInput[];
 })
 export class AlbumCollectionListComponent {
     @Input() albums: AlbumsInput;
+    @Output() removeFromCollection = new EventEmitter<Album>();
 }
  

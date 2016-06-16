@@ -58,6 +58,7 @@ export class AlbumActions {
 
       static REMOVE_FROM_COLLECTION = '[Album] Remove from Collection';
       removeFromCollection(album: Album): Action {
+        console.log('[albumAction.ts] --- REMOVE_FROM_COLLECTION---');
         return {
           type: AlbumActions.REMOVE_FROM_COLLECTION,
           payload: album
@@ -66,6 +67,7 @@ export class AlbumActions {
 
       static REMOVE_FROM_COLLECTION_SUCCESS = '[Album] Remove From Collection Success';
       removeFromCollectionSuccess(album: Album): Action {
+        console.log('[albumAction.ts] --- REMOVE_FROM_COLLECTION_SUCCESS---');
         return {
           type: AlbumActions.REMOVE_FROM_COLLECTION_SUCCESS,
           payload: album
@@ -74,6 +76,7 @@ export class AlbumActions {
 
       static REMOVE_FROM_COLLECTION_FAIL = '[Album] Remove From Collection Fail';
       removeFromCollectionFail(album: Album): Action {
+        console.log('[albumAction.ts] --- REMOVE_FROM_COLLECTION_FAIL---');
         return {
           type: AlbumActions.REMOVE_FROM_COLLECTION_FAIL,
           payload: album
