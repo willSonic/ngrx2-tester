@@ -96,6 +96,8 @@ export class AlbumDetailComponent {
     console.log("[AlbumDetailComponent] ===albumName ", this.album)
     return this.album.name;
   }
+    
+    
    /*
 
   get genres() {

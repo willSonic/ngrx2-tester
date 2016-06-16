@@ -16,7 +16,10 @@ html, body{
     color:#EBEBEB;
 }
 
-
+.app-base md-sidenav{
+    background:#65788b;
+    background-color:#65788b;
+}
 .search-title{
     color:#EBEBEB;
     padding-left:10px;
