@@ -46,7 +46,7 @@ export default function(state = initialState, action: Action): CollectionState {
       }
 
       return Object.assign({}, state, {
-        ids: [ ...state.trackIds, album.trackId ]
+        trackIds: [ ...state.trackIds, album.trackId ]
       });
     }
 
@@ -55,7 +55,7 @@ export default function(state = initialState, action: Action): CollectionState {
       const album: Album = action.payload;
 
       return Object.assign({}, state, {
-        ids: state.trackIds.filter(trackId => trackId !== album.trackId)
+        trackIds: state.trackIds.filter(trackId => trackId !== album.trackId)
       });
     }
 
@@ -80,6 +80,7 @@ export function getAlbumsTrackIds() {
   return (state$: Observable<CollectionState>) => state$
     .select(s => s.trackIds);
 }
+
 
 export function isAlbumInCollection(trackId: string) {
   return (state$: Observable<CollectionState>) => state$

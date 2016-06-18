@@ -46,18 +46,18 @@ export class AudioArtistExistsGuard implements Guard {
    * This method checks if a book with the given ID is already registered
    * in the Store
    */
-  hasAlbumInStore(id: string) {
-    console.log('[AudioArtistExistsGuard] ----  hasAlbumInStore === id '+id);
-    return this.store.let(hasAlbum(id)).take(1);
+  hasAlbumInStore(trackId: string) {
+    console.log('[AudioArtistExistsGuard] ----  hasAlbumInStore === id '+trackId);
+    return this.store.let(hasAlbum(trackId)).take(1);
   }
 
   /**
    * This method loads a book with the given ID from the API and caches
    * it in the store, returning `true` or `false` if it was found.
    */
-  hasAlbumInApi(id: string) {
-    console.log('[AudioArtistExistsGuard] ----  hasAlbumInApi === id '+id);
-    return this.spotifyArtists.retrieveAlbum(id)
+  hasAlbumInApi(trackId: string) {
+    console.log('[AudioArtistExistsGuard] ----  hasAlbumInApi === id '+trackId);
+    return this.spotifyArtists.retrieveAlbum(trackId)
       .map(album => this.albumActions.loadAlbum(album))
       .do(action => this.store.dispatch(action))
       .map(album => !!album)
@@ -69,14 +69,14 @@ export class AudioArtistExistsGuard implements Guard {
    * if the book is in store, and if not it then checks if it is in the
    * API.
    */
-  hasAlbum(id: string) {
-  console.log('[AudioArtistExistsGuard] ----  hasAlbum === id ='+ id);
-    return this.hasAlbumInStore(id)
+  hasAlbum(trackId: string) {
+  console.log('[AudioArtistExistsGuard] ----  hasAlbum === id ='+ trackId);
+    return this.hasAlbumInStore(trackId)
       .switchMap(inStore => {
         if (inStore) {
           return Observable.of(inStore);
         }
-        return this.hasAlbumInApi(id);
+        return this.hasAlbumInApi(trackId);
       });
   }
 
@@ -93,9 +93,9 @@ export class AudioArtistExistsGuard implements Guard {
    * on to the next candidate route. In this case, it will move on
    * to the 404 page.
    */
-  protectRoute({ routeParams: { id } }: TraversalCandidate) {
-     console.log('[AudioArtistExistsGuard] ----  protectRoute === routeParams ='+ id);
+  protectRoute({ routeParams: { trackId } }: TraversalCandidate) {
+     console.log('[AudioArtistExistsGuard] ----  protectRoute === routeParams ='+ trackId);
     return this.waitForCollectionToLoad()
-      .switchMapTo(this.hasAlbum(id));
+      .switchMapTo(this.hasAlbum(trackId));
   }
 }

@@ -1,12 +1,15 @@
 import { Component, Input,Output, EventEmitter  } from '@angular/core';
 
+import { IndexOf } from '../../pipes/index-of';
 import {  Album } from '../../models';
-import { AlbumDetailComponent, AlbumInput, RemoveOutput } from './album-detail';
+import { AlbumDetailComponent } from './album-detail';
 
-export type AlbumsInput = AlbumInput[];
+export type AlbumsInput = Album[];
+export type AreInCollectionInput = string[];
 @Component({
     selector: 'album-collection-list',
     directives: [ AlbumDetailComponent ],
+    pipes: [ IndexOf ],
     template: `
     <audioartist-detail 
       [inCollection]="true"

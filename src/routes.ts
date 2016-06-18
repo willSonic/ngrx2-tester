@@ -23,7 +23,7 @@ const routes: Routes = [
     })
   },
   {
-    path: '/album/:id',
+    path: '/album/:trackId',
     guards: [ AudioArtistExistsGuard ],
     loadComponent: () => new Promise(resolve => {
       (require as any).ensure([], require => {

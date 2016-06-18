@@ -94,10 +94,10 @@ export class AlbumDetailComponent {
   }
 
   get albumName() {
+    console.log("[AlbumDetailComponent] ===inCollection ,"+this.inCollection)
     console.log("[AlbumDetailComponent] ===albumName ", this.album)
     return this.album.name;
   }
-    
     
    /*
 

@@ -210,17 +210,18 @@ export function getCollectionLoading() {
   return compose(fromCollection.getLoading(), getCollectionState());
 }
 
-export function getCollectionAlbumIds() {
+export function getCollectionAlbumTrackIds() {
   return compose(fromCollection.getAlbumsTrackIds(), getCollectionState());
 }
 
-export function isAlbumInCollection(id: string) {
-  return compose(fromCollection.isAlbumInCollection(id), getCollectionState());
+export function isAlbumInCollection(trackId: string) {
+  return compose(fromCollection.isAlbumInCollection(trackId), getCollectionState());
 }
+
 
 export function getAlbumCollection() {
   return (state$: Observable<AppState>) => state$
-    .let(getCollectionAlbumIds())
+    .let(getCollectionAlbumTrackIds())
     .switchMap(albumIds => {
          return state$.let(getAlbums(albumIds))
     } );

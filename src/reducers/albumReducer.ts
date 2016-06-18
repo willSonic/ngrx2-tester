@@ -45,7 +45,7 @@ export default function(state = initialState, action: Action): AlbumState {
                 const albums: Album[] = action.payload;
                 const newAlbums = albums.filter(album => !state.entities[album.trackId]);
 
-                const newAlbumsIds = newAlbums.map(album => album.id);
+                const newAlbumsIds = newAlbums.map(album => album.trackId);
                 const newAlbumsEntities = newAlbums.reduce((entities: { [trackId: string]: Album }, album: Album) => {
                     return Object.assign(entities, {
                         [album.trackId]: album
@@ -93,9 +93,7 @@ export function getAlbums(albumIds: string[]) {
     return (state$: Observable<AlbumState>) => state$
         .let(getAlbumEntities())
         .map(entities => albumIds.map(trackId => {
-
-  console.log('[albumReducers] ---getAlbums  --- entities['+trackId+']', entities[trackId]);
-               return entities[trackId]
+             return entities[trackId]
         }));
 }
 

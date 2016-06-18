@@ -5,9 +5,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { AlbumActions } from '../actions';
 import {  Album } from '../models';
-import { AppState, getAlbumCollection, isAlbumInCollection} from '../reducers';
+import { AppState, getAlbumCollection, getCollectionAlbumTrackIds} from '../reducers';
 import { RemoveOutput} from '../components/artistdisplay/album-detail';
 import { AlbumCollectionListComponent,
+         AreInCollectionInput,
          AlbumsInput } from '../components/artistdisplay/album-collection-list';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 
@@ -21,6 +22,7 @@ import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
     </md-card>
     <album-collection-list 
       (removeFromCollection)="removeFromCollection($event)"
+      [albumCollection]="areAlbumInCollection$ | async"
       [albums]="albums$ | async" ></album-collection-list>
   `,
   styles: [`
@@ -39,8 +41,7 @@ import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 })
 export class CollectionPage {
   albums$: Observable<AlbumsInput>;
-
-  constructor(private store: Store<AppState>,private albumActions:AlbumActions) {
+  constructor(private store: Store<AppState>, private albumActions:AlbumActions) {
     this.albums$ = store.let(getAlbumCollection());
   }
 
