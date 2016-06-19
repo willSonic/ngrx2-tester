@@ -50,7 +50,8 @@ import searchReducer, * as fromSearch from './searchReducer';
 import albumsReducer, * as fromAlbums from './albumReducer';
 import audioArtistsReducer, * as fromAudioArtists from './audioArtistsReducer';
 import collectionReducer, * as fromCollection from './collectionReducer';
-
+import playListReducer, * as fromPlayList from './playListReducer';
+import audioTrackReducer, * as fromAudioTracks from './audioTrackReducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -62,6 +63,8 @@ export interface AppState {
   albums: fromAlbums.AlbumState;
   audioArtists: fromAudioArtists.AudioArtistState;
   collection: fromCollection.CollectionState;
+  playList: fromPlayList.PlayListState;
+  audioTracks: fromAudioTracks.AudioTrackState;
 }
 
 
@@ -77,7 +80,9 @@ export default compose(storeLogger(), combineReducers)({
     search: searchReducer,
     albums:albumsReducer,
     audioArtists: audioArtistsReducer,
-    collection: collectionReducer
+    collection: collectionReducer,
+    playList:playListReducer,
+    audioTracks:audioTrackReducer
 });
 
 
@@ -225,4 +230,15 @@ export function getAlbumCollection() {
     .switchMap(albumIds => {
          return state$.let(getAlbums(albumIds))
     } );
+}
+
+
+
+export function getPlayListState(){
+  return (state$: Observable<AppState>) => state$
+    .select(s => s.playList);
+}
+
+export function getPlayList(){
+  return compose(fromPlayList.getPlayList(), getPlayListState());
 }

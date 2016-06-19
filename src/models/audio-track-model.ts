@@ -1,7 +1,10 @@
+import {Album} from './audio-artist-model'
+
 export interface AudioTrack {
-    id: number;
-    artistName: string;
-    trackTitle: string;
-    albumImgSrc: string;
-    trackURL:string;
+    id: string;
+    album:Album,
+    artistAudioBuffer: ArrayBuffer;
+    downloadComplete:boolean;
+    isPlaying:boolean;
+    currentPosition:number;
 }

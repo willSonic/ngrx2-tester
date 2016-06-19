@@ -16,7 +16,8 @@ import { AppState } from '../reducers';
 import { SpotifyService } from '../services/SpotifyService';
 import { AudioArtistActions } from '../actions/audioArtistsAction';
 import { AudioArtist, Album } from '../models';
-import {AlbumActions} from "../actions/albumsAction";
+import { AlbumActions } from "../actions/albumsAction";
+import { AudioTrackActions } from "../actions/audioTrackAction";
 
 
 @Injectable()
@@ -26,7 +27,8 @@ export class AudioArtistEffects {
     private spotifyArtists: SpotifyService,
     private db: Database,
     private albumActions: AlbumActions,
-    private audioArtistActions: AudioArtistActions
+    private audioArtistActions: AudioArtistActions,
+    private audioTrackActions:AudioTrackActions
   ) { }
 
 /**
@@ -68,9 +70,7 @@ export class AudioArtistEffects {
     .map<string>(toPayload)
     .filter(query => query === '')
     .mapTo(this.albumActions.searchAlbumComplete([]));
-
-
-
+  
 
   @Effect() addAlbumsFromAudioArtistSearh$ = this.updates$
       .whenAction(AudioArtistActions.SEARCH_COMPLETE)
@@ -111,6 +111,11 @@ export class AudioArtistEffects {
         this.albumActions.addToCollectionFail(album)
       ))
     );
+    
+  @Effect() createAudioTrack = this.updates$
+    .whenAction(AlbumActions.LOAD_COLLECTION_SUCCESS)
+    .map<Album[]>(toPayload)
+    .map((albums:Album[]) =>  this.audioTrackActions.createAudioTracksFromAlbumList(albums));
 
 
   @Effect() removeAlbumFromCollection$ = this.updates$

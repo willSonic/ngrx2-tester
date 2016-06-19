@@ -1,7 +1,7 @@
 import '@ngrx/core/add/operator/select';
 import 'rxjs/add/operator/switchMap';
 import { Component } from '@angular/core';
-import { RouteParams } from '@ngrx/router';
+import { Router, RouteParams } from '@ngrx/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -33,16 +33,19 @@ export class AudioArtistViewPage {
   
   collectionChange:any;
 
-  subject:any;
+  currentAlbumTrackId:string;
+
 
   constructor(
     private store: Store<AppState>,
     private albumActions: AlbumActions,
-    private routeParams$: RouteParams
+    private routeParams$: RouteParams,
+    private _router:Router
   ) {
 
-     routeParams$.select<string>('trackId').subscribe(value =>
-             console.log("[audioartist-viewpage.t audioBuffer routeParams$ =", value))
+   routeParams$.select<string>('trackId').subscribe(value =>{
+            this.currentAlbumTrackId = value;
+          });
 
     this.album$ = routeParams$
       .select<string>('trackId')
@@ -55,9 +58,12 @@ export class AudioArtistViewPage {
     this.collectionChange = store.let( getCollectionState());
 
 
-    this.collectionChange.subscribe(state =>
-             console.log("[audioartist-viewpage.t audioBuffer audioItemState =", state.trackIds)
-    );
+    this.collectionChange.subscribe(state =>{
+             console.log("[audioartist-viewpage.t audioBuffer audioItemState ="+ state.trackIds.includes(this.currentAlbumTrackId));
+              if(state.trackIds.includes(this.currentAlbumTrackId)){
+                  this._router.go('/audioArtist/find')
+             }
+    });
   }
 
   addToCollection(album: AddOutput) {

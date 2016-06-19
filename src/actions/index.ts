@@ -1,12 +1,14 @@
 import { AudioArtistActions } from './audioArtistsAction';
 import { AlbumActions } from './albumsAction';
-//import { AudioPlayerActions } from './audioplayerAction';
+import { PlayListActions } from './playListAction';
+import { AudioTrackActions } from './audioTrackAction';
 
 
 export {
     AudioArtistActions,
-    AlbumActions
-  //  AudioItemActions,
+    AlbumActions,
+    PlayListActions,
+    AudioTrackActions
    // AudioPlayerActions,
    // ArtistActions
 
@@ -14,5 +16,7 @@ export {
 
 export default [
     AudioArtistActions,
-    AlbumActions
+    AlbumActions,
+    PlayListActions,
+    AudioTrackActions
 ];

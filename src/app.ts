@@ -74,11 +74,15 @@ import {MATERIAL_DIRECTIVES } from 'ng2-material';
 						Wilsonic NRGX2 Test Harness
 						<span class="app-toolbar-filler"></span>
 					</md-toolbar>
-				
-				<div class="app-content" layout-fill layout="column">
-					   <route-view></route-view>      
-				</div>
-				</md-sidenav-layout>
+					<div class="app-content" layout-fill layout="row">
+						<section>
+						   <route-view></route-view>      
+					   </section>
+						<aside>
+						  <route-view name="sideMenu"></route-view>
+						</aside>
+					</div>
+			    </md-sidenav-layout> 
 			  `
 })
 export default class App {}

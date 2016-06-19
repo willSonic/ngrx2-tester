@@ -1,4 +1,8 @@
 import { Routes } from '@ngrx/router';
+import { PlayListPage } from   './pages/playlist-page';
+import { CollectionPage } from   './pages/collection-page';
+import { AudioArtistFindPage } from './pages/audioartist-find-page';
+import { AudioArtistViewPage } from './pages/audioartist-view-page';
 
 import { AudioArtistExistsGuard, CollectionExistGuard  } from './guards';
 
@@ -12,7 +16,11 @@ const routes: Routes = [
         console.log('Go To CollectionPage')
         resolve(require('./pages/collection-page').CollectionPage);
       });
-    })
+    }),
+    components:{
+      main: CollectionPage,
+      sideMenu: PlayListPage
+    }
   },
   {
     path: '/audioArtist/find',
@@ -20,7 +28,11 @@ const routes: Routes = [
       (require as any).ensure([], require => {
         resolve(require('./pages/audioartist-find-page').AudioArtistFindPage);
       });
-    })
+    }),
+    components:{
+      main: AudioArtistFindPage,
+      sideMenu: PlayListPage
+    }
   },
   {
     path: '/album/:trackId',
@@ -29,7 +41,11 @@ const routes: Routes = [
       (require as any).ensure([], require => {
         resolve(require('./pages/audioartist-view-page').AudioArtistViewPage);
       });
-    })
+    }),
+    components:{
+      main: AudioArtistViewPage,
+      sideMenu: PlayListPage
+    }
   },
   {
     path: '/*',
