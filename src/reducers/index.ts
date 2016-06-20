@@ -242,3 +242,16 @@ export function getPlayListState(){
 export function getPlayList(){
   return compose(fromPlayList.getPlayList(), getPlayListState());
 }
+
+
+
+
+
+export function getAudioTrackState(){
+    return (state$: Observable<AppState>) => state$
+        .select(s => s.audioTracks);
+}
+
+export function getAudioTracks(){
+    return compose(fromAudioTracks.getAudioTracks(), getAudioTrackState());
+}

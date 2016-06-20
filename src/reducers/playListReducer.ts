@@ -35,6 +35,15 @@ export default function(state = initialState, action: Action): PlayListState {
                          playList: state.playList.filter(audioTrack => audioTrack.album.id !== audioTrackToRemove.album.id)
                   });
             }
+        case PlayListActions.ADD_AUDIOTRACK_LIST:{
+            console.log("[playListReducer.js]=--ADD_AUDIOTRACK_LIST-- action.payload= "+action.payload);
+            const audioTracks: AudioTrack[]  = action.payload;
+
+
+            return Object.assign({}, state, {
+                playList: [ ...state.playList, ...audioTracks ]
+            });
+        }
         default: {
             return state;
         }

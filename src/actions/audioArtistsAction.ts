@@ -46,30 +46,30 @@ export class AudioArtistActions {
           payload: audioArtist
         };
       }
-    
-      static REMOVE_FROM_COLLECTION = '[AudioArtist] Remove from Collection';
-      removeFromCollection(audioArtist: AudioArtist): Action {
-        return {
-          type: AudioArtistActions.REMOVE_FROM_COLLECTION,
-          payload: audioArtist
-        };
-      }
-    
-      static REMOVE_FROM_COLLECTION_SUCCESS = '[AudioArtist] Remove From Collection Success';
-      removeFromCollectionSuccess(audioArtist: AudioArtist): Action {
-        return {
-          type: AudioArtistActions.REMOVE_FROM_COLLECTION_SUCCESS,
-          payload: audioArtist
-        };
-      }
-    
-      static REMOVE_FROM_COLLECTION_FAIL = '[AudioArtist] Remove From Collection Fail';
-      removeFromCollectionFail(audioArtist: AudioArtist): Action {
-        return {
-          type: AudioArtistActions.REMOVE_FROM_COLLECTION_FAIL,
-          payload: audioArtist
-        };
-      }
+      //
+      // static REMOVE_FROM_COLLECTION = '[AudioArtist] Remove from Collection';
+      // removeFromCollection(audioArtist: AudioArtist): Action {
+      //   return {
+      //     type: AudioArtistActions.REMOVE_FROM_COLLECTION,
+      //     payload: audioArtist
+      //   };
+      // }
+      //
+      // static REMOVE_FROM_COLLECTION_SUCCESS = '[AudioArtist] Remove From Collection Success';
+      // removeFromCollectionSuccess(audioArtist: AudioArtist): Action {
+      //   return {
+      //     type: AudioArtistActions.REMOVE_FROM_COLLECTION_SUCCESS,
+      //     payload: audioArtist
+      //   };
+      // }
+      //
+      // static REMOVE_FROM_COLLECTION_FAIL = '[AudioArtist] Remove From Collection Fail';
+      // removeFromCollectionFail(audioArtist: AudioArtist): Action {
+      //   return {
+      //     type: AudioArtistActions.REMOVE_FROM_COLLECTION_FAIL,
+      //     payload: audioArtist
+      //   };
+      // }
     
       static LOAD_COLLECTION = '[AudioArtist] Load Collection';
       loadCollection(): Action {

@@ -18,6 +18,7 @@ import { AudioArtistActions } from '../actions/audioArtistsAction';
 import { AudioArtist, Album } from '../models';
 import { AlbumActions } from "../actions/albumsAction";
 import { AudioTrackActions } from "../actions/audioTrackAction";
+import { PlayListActions } from "../actions/playListAction";
 
 
 @Injectable()
@@ -28,7 +29,8 @@ export class AudioArtistEffects {
     private db: Database,
     private albumActions: AlbumActions,
     private audioArtistActions: AudioArtistActions,
-    private audioTrackActions:AudioTrackActions
+    private audioTrackActions:AudioTrackActions,
+    private playListActions:PlayListActions
   ) { }
 
 /**
@@ -116,6 +118,12 @@ export class AudioArtistEffects {
     .whenAction(AlbumActions.LOAD_COLLECTION_SUCCESS)
     .map<Album[]>(toPayload)
     .map((albums:Album[]) =>  this.audioTrackActions.createAudioTracksFromAlbumList(albums));
+
+
+  @Effect() addAudioTracksToPlayList = this.updates$
+      .whenAction(AudioTrackActions.CREATE_AUDIOTRACK_FROM_COLLECTION)
+      .map<AudioTrack[]>(toPayload)
+      .map((audioTracks:AudioTrack[]) =>  this.playListActions.addAudioTrackList(audioTracks));
 
 
   @Effect() removeAlbumFromCollection$ = this.updates$

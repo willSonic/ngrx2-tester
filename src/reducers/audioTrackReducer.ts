@@ -25,16 +25,12 @@ export default function(state = initialState, action: Action, audioTrack:AudioTr
         case AudioTrackActions.CREATE_AUDIOTRACK_FROM_COLLECTION:{
                console.log("[addtrackReducer.js]=--CREATE_AUDIOTRACK_FROM_COLLECTION-- action.payload= "+action.payload);
 
-                const newAudioTracks: AudioTrack[] = action.payload.map(audioArtist =>{
-                                                                                         let newAudioTrack = new AudioTrack();
-                                                                                         return Object.assign(newAudioTrack,
-                                                                                                               {id:uuid(),
-                                                                                                                album:audioArtist.album,
-                                                                                                                artistAudioBuffer: null,
-                                                                                                                downloadComplete:false,
-                                                                                                                isPlaying:false,
-                                                                                                                currentPosition:0});
-                                                                                       });
+                  const newAudioTracks: AudioTrack[] = action.payload.map(audioArtist => Object.assign({}, {id:uuid(),
+                                                                                                            album:audioArtist.album,
+                                                                                                            artistAudioBuffer: null,
+                                                                                                            downloadComplete:false,
+                                                                                                            isPlaying:false,
+                                                                                                            currentPosition:0}));
 
                   const newAudioTrackIds = newAudioTracks.map(audioTrack => audioTrack.id);
 
@@ -43,7 +39,7 @@ export default function(state = initialState, action: Action, audioTrack:AudioTr
                            [audioTrack.id]: audioTrack
                         });
                     }, {});
-
+ 
                  return {
                     audioTrackIds: [ ...state.audioTrackIds, ...newAudioTrackIds ],
                     entities: Object.assign({}, state.entities, newAudioTrackEntities)
@@ -55,3 +51,11 @@ export default function(state = initialState, action: Action, audioTrack:AudioTr
         }
     }
 }
+
+
+export function getAudioTracks() {
+    return (state$: Observable<AudioTrackState>) => state$
+        .select(s => s.entities);
+};
+
+
