@@ -7,24 +7,24 @@ import { PlayListActions } from '../actions';
 
 
 export interface PlayListState {
-    playList:AudioTrack[]
+    audioTrackList:AudioTrack[]
 };
 
 const initialState: PlayListState = {
-    playList: []
+    audioTrackList: []
 };
 
 
 export default function(state = initialState, action: Action): PlayListState {
     switch (action.type) {
         case PlayListActions.ADD_AUDIOTRACK:{
-               console.log("[playListReducer.js]=--ADD_AUDIOTRACK-- action.payload= "+action.payload);
+               console.log("[audioTrackListReducer.js]=--ADD_AUDIOTRACK-- action.payload= ",action.payload);
                   const audioTrack: AudioTrack  = action.payload;
-                  if (state.playList.includes(audioTrack)) {
+                  if (state.audioTrackList.includes(audioTrack)) {
                     return state;
                   }
                   return Object.assign({}, state, {
-                    playList: [ ...state.playList, audioTrack ]
+                    audioTrackList: [ ...state.audioTrackList, audioTrack ]
                   });
             }
         case PlayListActions.REMOVE_AUDIOTRACK:{
@@ -32,16 +32,16 @@ export default function(state = initialState, action: Action): PlayListState {
                   const audioTrackToRemove: AudioTrack  = action.payload;
 
                   return Object.assign({}, state, {
-                         playList: state.playList.filter(audioTrack => audioTrack.album.id !== audioTrackToRemove.album.id)
+                         audioTrackList: state.audioTrackList.filter(audioTrack => audioTrack.album.id !== audioTrackToRemove.album.id)
                   });
             }
         case PlayListActions.ADD_AUDIOTRACK_LIST:{
-            console.log("[playListReducer.js]=--ADD_AUDIOTRACK_LIST-- action.payload= "+action.payload);
+            console.log("[playListReducer.js]=--ADD_AUDIOTRACK_LIST-- action.payload= ",action.payload);
             const audioTracks: AudioTrack[]  = action.payload;
 
 
             return Object.assign({}, state, {
-                playList: [ ...state.playList, ...audioTracks ]
+                audioTrackList: [ ...state.audioTrackList, ...audioTracks ]
             });
         }
         default: {
@@ -53,7 +53,7 @@ export default function(state = initialState, action: Action): PlayListState {
 
 export function getPlayList() {
     return (state$: Observable<PlayListState>) => state$
-        .select(s => s.playList);
+        .select(s => s.audioTrackList);
 };
 
 

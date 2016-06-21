@@ -2,8 +2,8 @@ import 'rxjs/add/operator/map';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { AudioArtist } from '../models';
-import { Album } from '../models';
+import { AudioArtist, Album, AudioTrack } from '../models';
+import { uuid } from '../util/uuid';
 
 
 @Injectable()
@@ -58,7 +58,19 @@ export class SpotifyService {
   retrieveAudioTrack(id: string): Observable<AudioTrack[]> {
     return this.query(`/tracks/${id}`);
   }*/
+/*
+  buildAudioTrackFromAlbum(albums:Album[]): Observable<AudioTrack[]> {
+       let audioTrack:AudioTrack[] = [];
+       audioTrack.push(albums.map(album => Object.assign({}, {id:uuid(),
+                                          album:album,
+                                          artistAudioBuffer: null,
+                                          downloadComplete:false,
+                                          isPlaying:false,
+                                          currentPosition:0})));
+           return Observable.of(audioTrack);
 
+   }
 
+   */
 }
 

@@ -103,9 +103,8 @@ export default compose(storeLogger(), combineReducers)({
  * ```
  */
  export function getAudioArtistsState() {
-  console.log("reducer index.ts --- getAudioArtistsState");
   return (state$: Observable<AppState>) => state$
-    .select(s => s. audioArtists);
+    .select(s => s.audioArtists);
 }
 
 /**
@@ -123,7 +122,6 @@ export default compose(storeLogger(), combineReducers)({
  }
 
  export function getAudioArtist(id: string) {
-    console.log('[index.ts reducers] --getAudioArtist id'+id);
    return compose(fromAudioArtists.getAudioArtist(id), getAudioArtistsState());
  }
 
@@ -253,5 +251,5 @@ export function getAudioTrackState(){
 }
 
 export function getAudioTracks(){
-    return compose(fromAudioTracks.getAudioTracks(), getAudioTrackState());
+    return compose(fromAudioTracks.getAudioTracksEntities(), getAudioTrackState());
 }

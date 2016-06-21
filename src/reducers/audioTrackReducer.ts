@@ -9,28 +9,29 @@ import { AudioTrackActions } from '../actions';
 
 
 export interface  AudioTrackState {
-    audioTrackIds: string[],
-    entities: { [audioTrackIds: string]: AudioTrack}
+    ids: string[],
+    entities: { [id: string]: AudioTrack}
 };
 
 const initialState: AudioTrackState = {
-    audioTrackIds: [],
+    ids: [],
     entities: {}
 };
 
 
-export default function(state = initialState, action: Action, audioTrack:AudioTrack): AudioTrackState {
+export default function(state = initialState, action: Action): AudioTrackState {
               // console.log("[albumReducer.js]=---- AlbumState STATE=");
     switch (action.type) {
         case AudioTrackActions.CREATE_AUDIOTRACK_FROM_COLLECTION:{
-               console.log("[addtrackReducer.js]=--CREATE_AUDIOTRACK_FROM_COLLECTION-- action.payload= "+action.payload);
-
-                  const newAudioTracks: AudioTrack[] = action.payload.map(audioArtist => Object.assign({}, {id:uuid(),
-                                                                                                            album:audioArtist.album,
-                                                                                                            artistAudioBuffer: null,
-                                                                                                            downloadComplete:false,
-                                                                                                            isPlaying:false,
-                                                                                                            currentPosition:0}));
+               console.log("[addtrackReducer.js]=--CREATE_AUDIOTRACK_FROM_COLLECTION-- action.payload= ", action.payload);
+                  const audioTracks: AudioTrack[] = action.payload.map((album) => Object.assign( {}, {id:uuid(),
+                          album:album,
+                          artistAudioBuffer: null,
+                          downloadComplete:false,
+                          isPlaying:false,
+                          currentPosition:0})
+                  );
+                  const newAudioTracks = audioTracks.filter(audioTrack => !state.entities[audioTrack.id]);
 
                   const newAudioTrackIds = newAudioTracks.map(audioTrack => audioTrack.id);
 
@@ -39,9 +40,10 @@ export default function(state = initialState, action: Action, audioTrack:AudioTr
                            [audioTrack.id]: audioTrack
                         });
                     }, {});
- 
+
+               console.log("[addtrackReducer.js]=--CREATE_AUDIOTRACK_FROM_COLLECTION-- newAudioTrackEntities= ", newAudioTrackEntities);
                  return {
-                    audioTrackIds: [ ...state.audioTrackIds, ...newAudioTrackIds ],
+                    ids: [ ...state.ids, ...newAudioTrackIds ],
                     entities: Object.assign({}, state.entities, newAudioTrackEntities)
                 };
             }
@@ -53,7 +55,7 @@ export default function(state = initialState, action: Action, audioTrack:AudioTr
 }
 
 
-export function getAudioTracks() {
+export function getAudioTracksEntities() {
     return (state$: Observable<AudioTrackState>) => state$
         .select(s => s.entities);
 };

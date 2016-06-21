@@ -8,11 +8,12 @@ import 'rxjs/add/operator/switchMapTo';
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/observable/of';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Effect, StateUpdates, toPayload } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { Database } from '@ngrx/db';
 
-import { AppState } from '../reducers';
+import { AppState, getAudioTracks } from '../reducers';
 import { SpotifyService } from '../services/SpotifyService';
 import { AudioArtistActions } from '../actions/audioArtistsAction';
 import { AudioArtist, Album } from '../models';
@@ -24,6 +25,7 @@ import { PlayListActions } from "../actions/playListAction";
 @Injectable()
 export class AudioArtistEffects {
   constructor(
+    private _store:Store<AppState>,
     private updates$: StateUpdates<AppState>,
     private spotifyArtists: SpotifyService,
     private db: Database,
@@ -33,6 +35,14 @@ export class AudioArtistEffects {
     private playListActions:PlayListActions
   ) { }
 
+
+  /*getLoadAudioTracks(){
+     return this._store.let(getAudioTracks())
+      .filter(audioTracks => audioTracks)
+      .take(1);
+  //  .map(audioTracks => this.audioTrackActions.audioTrackCreatonSuccess(audioTracks)));
+
+  }*/
 /**
  * Effects offer a way to isolate and easily test side-effects within your
  * application. StateUpdates is an observable of the latest state and
@@ -118,13 +128,16 @@ export class AudioArtistEffects {
     .whenAction(AlbumActions.LOAD_COLLECTION_SUCCESS)
     .map<Album[]>(toPayload)
     .map((albums:Album[]) =>  this.audioTrackActions.createAudioTracksFromAlbumList(albums));
+  //  .switchMap((audioTracks = this.getLoadAudioTracks()) => this.audioTrackActions.audioTrackCreatonSuccess(audioTracks));
 
-
+/*
   @Effect() addAudioTracksToPlayList = this.updates$
-      .whenAction(AudioTrackActions.CREATE_AUDIOTRACK_FROM_COLLECTION)
+      .whenAction(AudioTrackActions.AUDIOTRACK_FROM_COLLECTION_SUCCESS)
       .map<AudioTrack[]>(toPayload)
-      .map((audioTracks:AudioTrack[]) =>  this.playListActions.addAudioTrackList(audioTracks));
-
+      .map((audioTracks:AudioTrack[]) => {
+        return this.playListActions.addAudioTrackList(audioTracks)
+      });
+*/
 
   @Effect() removeAlbumFromCollection$ = this.updates$
     .whenAction(AlbumActions.REMOVE_FROM_COLLECTION)

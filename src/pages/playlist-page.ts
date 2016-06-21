@@ -4,9 +4,7 @@ import { RouteParams } from '@ngrx/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { PlayListActions } from '../actions';
-import {  Album } from '../models';
-import { AppState, getPlayList, getCollectionAlbumTrackIds} from '../reducers';
-import { RemoveOutput} from '../components/artistdisplay/album-detail';
+import { AppState, getPlayList} from '../reducers';
 import { AudioTrackListComponent,AudioTracksInput } from '../components/playlist-display/audiotrack-list';
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 
@@ -38,7 +36,11 @@ import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
 export class PlayListPage {
   playList$: Observable<AudioTracksInput>;
   constructor(private store: Store<AppState>, private playListActions:PlayListActions) {
-    this.playList$ = store.let(getPlayList());
+    this.playList$ = store.let(getPlayList()).map(audioTrackList => audioTrackList);
+
+
+
+    this.playList$.subscribe(state => console.log("[playList-viewpage.ts --this.playList$.subscri-- state =", state));
   }
 
 }
