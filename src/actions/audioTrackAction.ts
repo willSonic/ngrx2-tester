@@ -29,6 +29,14 @@ export class AudioTrackActions {
         };
       }
 
+      static AUDIOTRACK_BUILD_COMPLETE = '[AudioTrack] audiotrack build complete';
+      buildComplete(): Action {
+        console.log('[actionTrackAction.ts]----buildComplete()---');
+        return {
+          type: AudioTrackActions.AUDIOTRACK_BUILD_COMPLETE
+        };
+      }
+
 /*
       static AUDIOTRACK_COLLECTION_SUCCESS = '[AudioTrack] create AudioTracks Success';
       buildCompleteFromCollection(audioTracks:AudioTrack[]): Action{

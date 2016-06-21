@@ -56,6 +56,8 @@ export default function(state = initialState, action: Action): AudioTrackState {
 
 
 export function getAudioTracksEntities() {
+console.log("[addtrackReducer.js]=--getAudioTracksEntities-- newAudioTrackEntities= ");
+
     return (state$: Observable<AudioTrackState>) => state$
         .select(s => s.entities);
 };
