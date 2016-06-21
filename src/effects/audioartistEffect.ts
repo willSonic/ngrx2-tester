@@ -127,8 +127,7 @@ export class AudioArtistEffects {
   @Effect() createAudioTrack = this.updates$
     .whenAction(AlbumActions.LOAD_COLLECTION_SUCCESS)
     .map<Album[]>(toPayload)
-    .map((albums:Album[]) =>  this.audioTrackActions.createAudioTracksFromAlbumList(albums))
-     //.mapTo(getAudioTracks())
+    .map((albums:Album[]) =>  this.audioTrackActions.createAudioTracksFromAlbumList(albums)).mapTo(getAudioTracks())
       .map(entities => entities)
     .do(v => console.log("---------v =", v));
     //.mapTo(this.audioTrackActions.buildComplete());
